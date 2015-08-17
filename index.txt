@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 1
 
    MSU-QB-2014/index
+   SSUsearch/index
 
 
 Indices and tables
