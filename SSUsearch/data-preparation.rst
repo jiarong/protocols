@@ -1,8 +1,10 @@
 
-.. default-literal-block:: code-block bash
+
 
 Setup data directory
 ~~~~~~~~~~~~~~~~~~~~
+
+.. default-literal-block:: code-block bash
 
 First go to a working dirtory::
 
@@ -28,6 +30,7 @@ Unzip the file::
 
     tar -xzvf SSUsearch_db.tgz
 
+Output should look like the following:
 .. parsed-literal::
 
     x SSUsearch_db/
@@ -54,10 +57,8 @@ Unzip the file::
 download a small test dataset
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-ATT: for real (larger) dataset, make sure there is enough disk space.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**ATT: for real (larger) dataset, make sure there is enough disk space.**
 
-.. code:: python
 Download a directory of files::
 
     wget -r -np -nH --cut-dir=4 --reject="index.html*" http://lyorn.idyll.org/~gjr/public2/misc/SSUsearch/test/
