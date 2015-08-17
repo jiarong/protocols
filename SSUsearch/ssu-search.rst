@@ -137,24 +137,20 @@ Get the unaligned fasta file::
 -  $Tag.ssu.out/$Tag.qc.$Gene.align.filter.fa:
     unaligned SSU rRNA gene fragments
 
-Extract the reads mapped 150bp region in V4 (577-727 in *E.coli* SSU rRNA gene position) for unsupervised clustering
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Extract the reads mapped 150bp region in V4 (577-727 in \*E.coli\* SSU rRNA gene position) for unsupervised clustering::
 
     python $Script_dir/region-cut.py $Tag.ssu.out/$Tag.qc.$Gene.align.filter $Start $End $Len_cutoff
     
     mv $Tag.ssu.out/$Tag.qc.$Gene.align.filter."$Start"to"$End".cut.lenscreen $Tag.ssu.out/$Tag.forclust
 
-
-Classify SSU rRNA gene seqs using SILVA
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Classify SSU rRNA gene seqs using SILVA::
 
     rm -f $Tag.ssu.out/$Tag.qc.$Gene.align.filter.*.wang.taxonomy
     mothur "#classify.seqs(fasta=$Tag.ssu.out/$Tag.qc.$Gene.align.filter.fa, template=$Gene_db, taxonomy=$Gene_tax, cutoff=50, processors=$Cpu)"
     mv $Tag.ssu.out/$Tag.qc.$Gene.align.filter.*.wang.taxonomy \
         $Tag.ssu.out/$Tag.qc.$Gene.align.filter.wang.silva.taxonomy
 
-
-Get the *.taxonomy file has taxon for each SSU rRNA fragment sequence id. We can get the count for each taxon::
+Get the \*.taxonomy file has taxon for each SSU rRNA fragment sequence id. We can get the count for each taxon::
 
     python $Script_dir/count-taxon.py \
         $Tag.ssu.out/$Tag.qc.$Gene.align.filter.wang.silva.taxonomy \
