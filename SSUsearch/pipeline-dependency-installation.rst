@@ -95,6 +95,8 @@ Install numpy, matplotlib, scipy, and pandas
 Alternatively, you can install **anaconda** that have most popular
 python packages installed: https://store.continuum.io/cshop/anaconda/
 
+The anaconda installation guide is `here <http://docs.continuum.io/anaconda/install#linux-install>`__.
+
 check dependencies installed
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

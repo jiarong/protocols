@@ -11,14 +11,11 @@ Check seqfile files to process in data directory (make sure you still remember t
 README
 ======
 
-This part of pipeline search for the SSU rRNA gene fragments, classify them, and extract reads aligned specific region. It is also heavy lifting part of the whole pipeline (more cpu will help).
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**This part of pipeline search for the SSU rRNA gene fragments, classify them, and extract reads aligned specific region. It is also heavy lifting part of the whole pipeline (more cpu will help).
 
-This part works with one seqfile a time. You just need to change the "Seqfile" and maybe other parameters in the two cells bellow.
-----------------------------------------------------------------------------------------------------------------------------------
+This part works with one seqfile a time. You just need to change the "Seqfile" and maybe other parameters in the two cells bellow.**
 
-If your computer has many processors, there are two ways to make use of the resource:
--------------------------------------------------------------------------------------
+If your computer has **many processors**, there are two ways to make use of the resource:
 
 1. Set "Cpu" higher number.
 
@@ -28,11 +25,9 @@ If your computer has many processors, there are two ways to make use of the reso
 
 (Again we assume the "Seqfile" is quality trimmed.)
 
-Here we will process one file at a time; set the "Seqfile" variable to the seqfile name to be be processed
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Here we will process one file at a time; set the "Seqfile" variable to the seqfile name to be be processed
 
-First part of seqfile basename (separated by ".") will be the label of this sample, so named it properly.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+First part of seqfile basename (separated by ".") will be the label of this sample, so named it properly.**
 
 e.g. for "/usr/local/notebooks/data/test/data/1c.fa", "1c" will the
 label of this sample.
@@ -68,6 +63,7 @@ Other parameters to set::
     Filename=$(basename(${Seqfile}))
     Tag=${Filename%%.*}
 
+    ### make absolute path
     export Hmm=$(readlink -f ${Hmm})
     export Seqfile=$(readlink -f ${Seqfile})
     export Script_dir=$(readlink -f ${Script_dir})
@@ -129,13 +125,13 @@ Get the unaligned fasta file::
 
     python $Script_dir/remove-gap.py $Tag.ssu.out/$Tag.qc.$Gene.align.filter $Tag.ssu.out/$Tag.qc.$Gene.align.filter.fa
 
-**Search is done here (the computational intensive part). Hooray!**
+**Search is done here (the computational intensive part). Hooray! There are two useful output files:**
 
--  $Tag.ssu.out/$Tag.qc.$Gene.align.filter:
-    aligned SSU rRNA gene fragments
+- $Tag.ssu.out/$Tag.qc.$Gene.align.filter:
+  aligned SSU rRNA gene fragments
 
--  $Tag.ssu.out/$Tag.qc.$Gene.align.filter.fa:
-    unaligned SSU rRNA gene fragments
+- $Tag.ssu.out/$Tag.qc.$Gene.align.filter.fa:
+  unaligned SSU rRNA gene fragments
 
 Extract the reads mapped 150bp region in V4 (577-727 in \*E.coli\* SSU rRNA gene position) for unsupervised clustering::
 
@@ -201,10 +197,9 @@ Here is the a list of output files:
     1c.qc.ssu.sto
 
 
-This part of pipeline (working with one sequence file) finishes here. Next we will combine samples for community analysis (see unsupervised analysis).
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**This part of pipeline (working with one sequence file) finishes here. Next we will combine samples for community analysis (see unsupervised analysis).**
 
-Following are files useful for community analysis:
+**Following are files useful for community analysis**:
 
 -  1c.577to727: aligned fasta file of seqs mapped to target region for
    de novo clustering

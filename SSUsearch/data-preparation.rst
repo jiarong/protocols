@@ -31,6 +31,7 @@ Unzip the file::
     tar -xzvf SSUsearch_db.tgz
 
 Output should look like the following:
+
 .. parsed-literal::
 
     x SSUsearch_db/

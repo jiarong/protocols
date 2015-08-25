@@ -13,9 +13,9 @@ Following are step by step tutorial for this pipeline:
 2. `Database and dataset preparation <./data-preparation.rst>`_
 
 3. `SSU rRNA gene fragment search and
-   classification <./ssu-search.rst>`_. ssu-search-Copy1.ipynb,
-   ssu-search-Copy2.ipynb, ssu-search-Copy3.ipynb, and
-   ssu-search-Copy4.ipynb are the ones to run for test data
+   classification <./ssu-search.rst>`_. ssu-search-Copy1.rst,
+   ssu-search-Copy2.rst, ssu-search-Copy3.rst, and
+   ssu-search-Copy4.rst are the ones to run for test data
 
 4. `Unsupervised analysis <./unsupervised-analysis.rst>`_
 
