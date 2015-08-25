@@ -175,6 +175,7 @@ Check the output directory::
     ls $Tag.ssu.out
 
 Here is the a list of output files:
+
 .. parsed-literal::
 
     1c.577to727
@@ -204,10 +205,14 @@ Here is the a list of output files:
 
 **Following are files useful for community analysis**:
 
--  1c.577to727: aligned fasta file of seqs mapped to target region for
-   de novo clustering
--  1c.qc.ssu.align.filter: aligned fasta file of all SSU rRNA gene
-   fragments
--  1c.qc.ssu.align.filter.wang.gg.taxonomy: Greengene taxonomy (for copy
-   correction)
--  1c.qc.ssu.align.filter.wang.silva.taxonomy: SILVA taxonomy
+- 1c.forclust:
+  aligned fasta file of seqs mapped to target region for de novo clustering
+
+- 1c.qc.ssu.align.filter:
+  aligned fasta file of all SSU rRNA gene fragments
+
+- 1c.qc.ssu.align.filter.wang.gg.taxonomy:
+  Greengene taxonomy (for copy correction)
+
+- 1c.qc.ssu.align.filter.wang.silva.taxonomy:
+  SILVA taxonomy
