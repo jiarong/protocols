@@ -57,76 +57,76 @@
             
   
   <p>Set another directory for unsupervised analysis:</p>
-<div class="highlight-python"><div class="highlight"><pre>cd /usr/local/notebooks
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd</span> /usr/local/notebooks
 mkdir -p ./workdir/clust
 </pre></div>
 </div>
 <p>Set parameters:</p>
-<div class="highlight-python"><div class="highlight"><pre>Prefix=&#39;SS&#39;    # name for the analysis run
-Script_dir=&#39;./SSUsearch/scripts&#39;
-Wkdir=&#39;./workdir&#39;
-Mcclust_jar=&#39;./external_tools/Clustering/dist/Clustering.jar&#39;
-Java_xmx=&#39;10g&#39;
-Java_gc_threads=&#39;2&#39;
-Otu_dist_cutoff=&#39;0.05&#39;
-Design=&#39;./data/test/SS.design&#39;
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">Prefix</span><span class="o">=</span><span class="s1">&#39;SS&#39;</span>    <span class="c"># name for the analysis run</span>
+<span class="nv">Script_dir</span><span class="o">=</span><span class="s1">&#39;./SSUsearch/scripts&#39;</span>
+<span class="nv">Wkdir</span><span class="o">=</span><span class="s1">&#39;./workdir&#39;</span>
+<span class="nv">Mcclust_jar</span><span class="o">=</span><span class="s1">&#39;./external_tools/Clustering/dist/Clustering.jar&#39;</span>
+<span class="nv">Java_xmx</span><span class="o">=</span><span class="s1">&#39;10g&#39;</span>
+<span class="nv">Java_gc_threads</span><span class="o">=</span><span class="s1">&#39;2&#39;</span>
+<span class="nv">Otu_dist_cutoff</span><span class="o">=</span><span class="s1">&#39;0.05&#39;</span>
+<span class="nv">Design</span><span class="o">=</span><span class="s1">&#39;./data/test/SS.design&#39;</span>
 
-# get absolute path
+<span class="c"># get absolute path</span>
 import os
-Script_dir=$(readlink -f ${Script_dir})
-Wkdir=$(readlink -f ${Wkdir})
-Mcclust_jar=$(readlink -f ${Mcclust_jar})
-Design=$(readlink -f ${Design})
+<span class="nv">Script_dir</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="si">${</span><span class="nv">Script_dir</span><span class="si">}</span><span class="k">)</span>
+<span class="nv">Wkdir</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="si">${</span><span class="nv">Wkdir</span><span class="si">}</span><span class="k">)</span>
+<span class="nv">Mcclust_jar</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="si">${</span><span class="nv">Mcclust_jar</span><span class="si">}</span><span class="k">)</span>
+<span class="nv">Design</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="si">${</span><span class="nv">Design</span><span class="si">}</span><span class="k">)</span>
 </pre></div>
 </div>
 <p>Go the clust direcory:</p>
-<div class="highlight-python"><div class="highlight"><pre>cd ./workdir/clust
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd</span> ./workdir/clust
 </pre></div>
 </div>
 <p>Combine all the aligned sequences from each sample:</p>
 <blockquote>
 <div>cat $Wkdir/<em>.ssu.out/</em>.forclust &gt; combined_seqs.afa</div></blockquote>
 <p>Make group file for mcclust and mothur. First part of the file basename will be the group label, e.g. file &#8220;aa.bb.cc&#8221; will have &#8220;aa&#8221; as group label:</p>
-<div class="highlight-python"><div class="highlight"><pre>python $Script_dir/make-groupfile.py $Prefix.groups $Wkdir/*.ssu.out/*.forclust
+<div class="highlight-bash"><div class="highlight"><pre>python <span class="nv">$Script_dir</span>/make-groupfile.py <span class="nv">$Prefix</span>.groups <span class="nv">$Wkdir</span>/*.ssu.out/*.forclust
 </pre></div>
 </div>
 <p>Dereplication with mcclust:</p>
-<div class="highlight-python"><div class="highlight"><pre>echo &quot;*** Starting mcclust derep..&quot;
-time java -Xmx$Java_xmx -XX:+UseParallelOldGC -XX:ParallelGCThreads=$Java_gc_threads -jar $Mcclust_jar derep -a -o derep.fasta temp.mcclust.names temp.txt combined_seqs.afa
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">echo</span> <span class="s2">&quot;*** Starting mcclust derep..&quot;</span>
+<span class="nb">time </span>java -Xmx<span class="nv">$Java_xmx</span> -XX:+UseParallelOldGC -XX:ParallelGCThreads<span class="o">=</span><span class="nv">$Java_gc_threads</span> -jar <span class="nv">$Mcclust_jar</span> derep -a -o derep.fasta temp.mcclust.names temp.txt combined_seqs.afa
 rm temp.txt
 </pre></div>
 </div>
 <p>Precluster to collapse sequences with 1 base difference (most likely caused by sequencing errors):</p>
-<div class="highlight-python"><div class="highlight"><pre>#Convert mcclust names to mothur names
-python $Script_dir/mcclust2mothur_names_file.py temp.mcclust.names temp.mothur.names
+<div class="highlight-bash"><div class="highlight"><pre><span class="c">#Convert mcclust names to mothur names</span>
+python <span class="nv">$Script_dir</span>/mcclust2mothur_names_file.py temp.mcclust.names temp.mothur.names
 
-echo &quot;***starting preclust..&quot;
-# output: derep.precluster.fasta, derep.precluster.names
-mothur &quot;#pre.cluster(fasta=derep.fasta, diffs=1, name=temp.mothur.names)&quot;
+<span class="nb">echo</span> <span class="s2">&quot;***starting preclust..&quot;</span>
+<span class="c"># output: derep.precluster.fasta, derep.precluster.names</span>
+mothur <span class="s2">&quot;#pre.cluster(fasta=derep.fasta, diffs=1, name=temp.mothur.names)&quot;</span>
 
-#Convert names back to mcclust
-python $Script_dir/mothur2mcclust_names_file.py derep.precluster.names $Prefix.names
+<span class="c">#Convert names back to mcclust</span>
+python <span class="nv">$Script_dir</span>/mothur2mcclust_names_file.py derep.precluster.names <span class="nv">$Prefix</span>.names
 </pre></div>
 </div>
 <p>Make distance matrix:</p>
-<div class="highlight-python"><div class="highlight"><pre>time java -Xmx$Java_xmx -XX:+UseParallelOldGC -XX:ParallelGCThreads=$Java_gc_threads -jar $Mcclust_jar dmatrix -l 25 -o matrix.bin -i $Prefix.names -I derep.precluster.fasta
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">time </span>java -Xmx<span class="nv">$Java_xmx</span> -XX:+UseParallelOldGC -XX:ParallelGCThreads<span class="o">=</span><span class="nv">$Java_gc_threads</span> -jar <span class="nv">$Mcclust_jar</span> dmatrix -l <span class="m">25</span> -o matrix.bin -i <span class="nv">$Prefix</span>.names -I derep.precluster.fasta
 </pre></div>
 </div>
 <p>Clustering with mcclust:</p>
-<div class="highlight-python"><div class="highlight"><pre>time java -Xmx$Java_xmx -XX:+UseParallelOldGC -XX:ParallelGCThreads=$Java_gc_threads -jar $Mcclust_jar cluster -m upgma -i $Prefix.names -s $Prefix.groups -o complete.clust -d matrix.bin
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">time </span>java -Xmx<span class="nv">$Java_xmx</span> -XX:+UseParallelOldGC -XX:ParallelGCThreads<span class="o">=</span><span class="nv">$Java_gc_threads</span> -jar <span class="nv">$Mcclust_jar</span> cluster -m upgma -i <span class="nv">$Prefix</span>.names -s <span class="nv">$Prefix</span>.groups -o complete.clust -d matrix.bin
 </pre></div>
 </div>
 <p>Convert clust results to mothur list:</p>
-<div class="highlight-python"><div class="highlight"><pre>python $Script_dir/mcclust2mothur-list-cutoff.py complete.clust $Prefix.list $Otu_dist_cutoff
+<div class="highlight-bash"><div class="highlight"><pre>python <span class="nv">$Script_dir</span>/mcclust2mothur-list-cutoff.py complete.clust <span class="nv">$Prefix</span>.list <span class="nv">$Otu_dist_cutoff</span>
 </pre></div>
 </div>
 <p>Remove &#8221;:&#8221; in sequence names (mothur automatically converts &#8221;:&#8221; to &#8220;_&#8221;):</p>
-<div class="highlight-python"><div class="highlight"><pre>sed -i &#39;s/:/_/g&#39; $Prefix.names $Prefix.groups $Prefix.list
-echo &quot;*** Replace &#39;:&#39; with &#39;_&#39; in seq names (original illumina name has &#39;:&#39; in them)&quot;
+<div class="highlight-bash"><div class="highlight"><pre>sed -i <span class="s1">&#39;s/:/_/g&#39;</span> <span class="nv">$Prefix</span>.names <span class="nv">$Prefix</span>.groups <span class="nv">$Prefix</span>.list
+<span class="nb">echo</span> <span class="s2">&quot;*** Replace &#39;:&#39; with &#39;_&#39; in seq names (original illumina name has &#39;:&#39; in them)&quot;</span>
 </pre></div>
 </div>
 <p>Get representitives of each OTU at OTU distance cutoff defined at top of this page:</p>
-<div class="highlight-python"><div class="highlight"><pre>java -jar $Mcclust_jar rep-seqs -c -l -s complete.clust $Otu_dist_cutoff combined_seqs.afa
+<div class="highlight-bash"><div class="highlight"><pre>java -jar <span class="nv">$Mcclust_jar</span> rep-seqs -c -l -s complete.clust <span class="nv">$Otu_dist_cutoff</span> combined_seqs.afa
 mv complete.clust_rep_seqs.fasta otu_rep_align.fa
 </pre></div>
 </div>
@@ -135,35 +135,35 @@ mv complete.clust_rep_seqs.fasta otu_rep_align.fa
 <dd>mothur &#8220;#make.shared(list=$Prefix.list, group=$Prefix.groups, label=$Otu_dist_cutoff);&#8221;</dd>
 </dl>
 <p>Get consensus taxonomy for each OTU:</p>
-<div class="highlight-python"><div class="highlight"><pre>cat $Wkdir/*.ssu.out/*.silva.taxonomy &gt; $Prefix.taxonomy
-mothur &quot;#classify.otu(list=$Prefix.list, taxonomy=$Prefix.taxonomy, label=$Otu_dist_cutoff)&quot;
+<div class="highlight-bash"><div class="highlight"><pre>cat <span class="nv">$Wkdir</span>/*.ssu.out/*.silva.taxonomy &gt; <span class="nv">$Prefix</span>.taxonomy
+mothur <span class="s2">&quot;#classify.otu(list=</span><span class="nv">$Prefix</span><span class="s2">.list, taxonomy=</span><span class="nv">$Prefix</span><span class="s2">.taxonomy, label=</span><span class="nv">$Otu_dist_cutoff</span><span class="s2">)&quot;</span>
 </pre></div>
 </div>
 <p>Make biom file:</p>
-<div class="highlight-python"><div class="highlight"><pre>mothur &quot;#make.biom(shared=$Prefix.shared, constaxonomy=$Prefix.$Otu_dist_cutoff.cons.taxonomy)&quot;
-mv $Prefix.$Otu_dist_cutoff.biom $Prefix.biom
+<div class="highlight-bash"><div class="highlight"><pre>mothur <span class="s2">&quot;#make.biom(shared=</span><span class="nv">$Prefix</span><span class="s2">.shared, constaxonomy=</span><span class="nv">$Prefix</span><span class="s2">.</span><span class="nv">$Otu_dist_cutoff</span><span class="s2">.cons.taxonomy)&quot;</span>
+mv <span class="nv">$Prefix</span>.<span class="nv">$Otu_dist_cutoff</span>.biom <span class="nv">$Prefix</span>.biom
 
-# clean up tempfiles
-rm -f mothur.*.logfile *rabund complete* derep.fasta matrix.bin nonoverlapping.bin temp.*
+<span class="c"># clean up tempfiles</span>
+rm -f mothur.*.logfile *rabund <span class="nb">complete</span>* derep.fasta matrix.bin nonoverlapping.bin temp.*
 </pre></div>
 </div>
 <p><strong>With SS.groups, SS.names and SS.list</strong>, most diversity analysis can be done by mothur. You can look at <a class="reference external" href="http://www.mothur.org/wiki/454_SOP">mothur wiki</a> for details (Do not forgot to do even sampling before beta-diversity analysis).</p>
 <p><strong>SS.biom file can used in most tools. (qiime, rdp, and phyloseq)</strong></p>
 <p>Since the purpose of this tutorial is to show our new pipeline, we will skip details of community analysis with mothur. Following are some common commands in mothur:</p>
-<div class="highlight-python"><div class="highlight"><pre>mothur &quot;#make.shared(biom=$Prefix.biom); sub.sample(shared=$Prefix.shared); summary.single(calc=nseqs-coverage-sobs-chao-shannon-invsimpson); dist.shared(calc=braycurtis); pcoa(phylip=$Prefix.userLabel.subsample.braycurtis.userLabel.lt.dist); nmds(phylip=$Prefix.userLabel.subsample.braycurtis.userLabel.lt.dist); amova(phylip=$Prefix.userLabel.subsample.braycurtis.userLabel.lt.dist, design=$Design); tree.shared(calc=braycurtis); unifrac.weighted(tree=$Prefix.userLabel.subsample.braycurtis.userLabel.tre, group=$Design, random=T)&quot;
-rm -f mothur.*.logfile;
+<div class="highlight-bash"><div class="highlight"><pre>mothur <span class="s2">&quot;#make.shared(biom=</span><span class="nv">$Prefix</span><span class="s2">.biom); sub.sample(shared=</span><span class="nv">$Prefix</span><span class="s2">.shared); summary.single(calc=nseqs-coverage-sobs-chao-shannon-invsimpson); dist.shared(calc=braycurtis); pcoa(phylip=</span><span class="nv">$Prefix</span><span class="s2">.userLabel.subsample.braycurtis.userLabel.lt.dist); nmds(phylip=</span><span class="nv">$Prefix</span><span class="s2">.userLabel.subsample.braycurtis.userLabel.lt.dist); amova(phylip=</span><span class="nv">$Prefix</span><span class="s2">.userLabel.subsample.braycurtis.userLabel.lt.dist, design=</span><span class="nv">$Design</span><span class="s2">); tree.shared(calc=braycurtis); unifrac.weighted(tree=</span><span class="nv">$Prefix</span><span class="s2">.userLabel.subsample.braycurtis.userLabel.tre, group=</span><span class="nv">$Design</span><span class="s2">, random=T)&quot;</span>
+rm -f mothur.*.logfile<span class="p">;</span>
 rm -f *.rabund
 </pre></div>
 </div>
 <p>Some simple visualization:</p>
-<div class="highlight-python"><div class="highlight"><pre># alpha diveristy index
-python $Script_dir/plot-diversity-index.py &quot;userLabel&quot; &quot;chao,shannon,invsimpson&quot; &quot;c,d&quot; &quot;SS.userLabel.subsample.groups.summary&quot; &quot;test&quot; &quot;test.alpha&quot;
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># alpha diveristy index</span>
+python <span class="nv">$Script_dir</span>/plot-diversity-index.py <span class="s2">&quot;userLabel&quot;</span> <span class="s2">&quot;chao,shannon,invsimpson&quot;</span> <span class="s2">&quot;c,d&quot;</span> <span class="s2">&quot;SS.userLabel.subsample.groups.summary&quot;</span> <span class="s2">&quot;test&quot;</span> <span class="s2">&quot;test.alpha&quot;</span>
 
-# taxon distribution
-python $Script_dir/plot-taxa-count.py 2 test.taxa.dist ../*.ssu.out/*.silva.taxonomy.count
+<span class="c"># taxon distribution</span>
+python <span class="nv">$Script_dir</span>/plot-taxa-count.py <span class="m">2</span> test.taxa.dist ../*.ssu.out/*.silva.taxonomy.count
 
-# ordination
-python $Script_dir/plot-pcoa.py  SS.userLabel.subsample.braycurtis.userLabel.lt.pcoa.axes  SS.userLabel.subsample.braycurtis.userLabel.lt.pcoa.loadings  test.beta.pcoa
+<span class="c"># ordination</span>
+python <span class="nv">$Script_dir</span>/plot-pcoa.py  SS.userLabel.subsample.braycurtis.userLabel.lt.pcoa.axes  SS.userLabel.subsample.braycurtis.userLabel.lt.pcoa.loadings  test.beta.pcoa
 </pre></div>
 </div>
 

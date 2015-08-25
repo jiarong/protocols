@@ -59,30 +59,30 @@
   <div class="section" id="setup-data-directory">
 <h1>Setup data directory<a class="headerlink" href="#setup-data-directory" title="Permalink to this headline">¶</a></h1>
 <p>First go to a working dirtory:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">notebooks</span>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd</span> /usr/local/notebooks
 </pre></div>
 </div>
 <p>Make a directory for data:</p>
-<div class="highlight-python"><div class="highlight"><pre>mkdir -p ./data
+<div class="highlight-bash"><div class="highlight"><pre>mkdir -p ./data
 </pre></div>
 </div>
 <p>Change directory into ./data:</p>
-<div class="highlight-python"><div class="highlight"><pre>cd ./data
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd</span> ./data
 </pre></div>
 </div>
 </div>
 <div class="section" id="download-database-files">
 <h1>Download database files<a class="headerlink" href="#download-database-files" title="Permalink to this headline">¶</a></h1>
 <p>Download the database files we need:</p>
-<div class="highlight-python"><div class="highlight"><pre>curl -O http://lyorn.idyll.org/~gjr/public2/misc/SSUsearch_db.tgz
+<div class="highlight-bash"><div class="highlight"><pre>curl -O http://lyorn.idyll.org/~gjr/public2/misc/SSUsearch_db.tgz
 </pre></div>
 </div>
 <p>Unzip the file:</p>
-<div class="highlight-python"><div class="highlight"><pre>tar -xzvf SSUsearch_db.tgz
+<div class="highlight-bash"><div class="highlight"><pre>tar -xzvf SSUsearch_db.tgz
 </pre></div>
 </div>
 <p>Output should look like the following:</p>
-<div class="highlight-python"><div class="highlight"><pre>x SSUsearch_db/
+<div class="highlight-bash"><div class="highlight"><pre>x SSUsearch_db/
 x SSUsearch_db/Gene_db.silva_108_rep_set.fasta
 x SSUsearch_db/Gene_tax.silva_taxa_family.tax
 x SSUsearch_db/Gene_model_org.16s_ecoli_J01695.fasta
@@ -108,9 +108,9 @@ x SSUsearch_db/Hmm.ssu.hmm
 <h1>download a small test dataset<a class="headerlink" href="#download-a-small-test-dataset" title="Permalink to this headline">¶</a></h1>
 <p><strong>ATT: for real (larger) dataset, make sure there is enough disk space.</strong></p>
 <p>Download a directory of files:</p>
-<div class="highlight-python"><div class="highlight"><pre>wget -r -np -nH --cut-dir=4 --reject=&quot;index.html*&quot; http://lyorn.idyll.org/~gjr/public2/misc/SSUsearch/test/
+<div class="highlight-bash"><div class="highlight"><pre>wget -r -np -nH --cut-dir<span class="o">=</span><span class="m">4</span> --reject<span class="o">=</span><span class="s2">&quot;index.html*&quot;</span> http://lyorn.idyll.org/~gjr/public2/misc/SSUsearch/test/
 
-ls test/data/
+ls <span class="nb">test</span>/data/
 </pre></div>
 </div>
 </div>

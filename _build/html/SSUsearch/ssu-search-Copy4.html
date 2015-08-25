@@ -57,12 +57,12 @@
             
   
   <p>Set up working directory:</p>
-<div class="highlight-python"><div class="highlight"><pre>cd /usr/local/notebooks
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd</span> /usr/local/notebooks
 mkdir -p ./workdir
 </pre></div>
 </div>
 <p>Check seqfile files to process in data directory (make sure you still remember the data directory):</p>
-<div class="highlight-python"><div class="highlight"><pre>ls ./data/test/data
+<div class="highlight-bash"><div class="highlight"><pre>ls ./data/test/data
 </pre></div>
 </div>
 <div class="section" id="readme">
@@ -82,92 +82,92 @@ time.</li>
 <p>e.g. for &#8220;/usr/local/notebooks/data/test/data/1c.fa&#8221;, &#8220;1c&#8221; will the
 label of this sample.</p>
 <p>Set the Seqfile variable to the sequence file to process:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">Seqfile</span><span class="o">=</span><span class="s">&#39;./data/test/data/2d.fa&#39;</span>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">Seqfile</span><span class="o">=</span><span class="s1">&#39;./data/test/data/2d.fa&#39;</span>
 </pre></div>
 </div>
 <p>Other parameters to set:</p>
-<div class="highlight-python"><div class="highlight"><pre>Cpu=&#39;2&#39;   # number of maxixum threads for search and alignment
-Hmm=&#39;./data/SSUsearch_db/Hmm.ssu.hmm&#39;   # hmm model for ssu
-Gene=&#39;ssu&#39;
-Script_dir=&#39;./SSUsearch/scripts&#39;
-Gene_model_org=&#39;./data/SSUsearch_db/Gene_model_org.16s_ecoli_J01695.fasta&#39;
-Ali_template=&#39;./data/SSUsearch_db/Ali_template.silva_ssu.fasta&#39;
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">Cpu</span><span class="o">=</span><span class="s1">&#39;2&#39;</span>   <span class="c"># number of maxixum threads for search and alignment</span>
+<span class="nv">Hmm</span><span class="o">=</span><span class="s1">&#39;./data/SSUsearch_db/Hmm.ssu.hmm&#39;</span>   <span class="c"># hmm model for ssu</span>
+<span class="nv">Gene</span><span class="o">=</span><span class="s1">&#39;ssu&#39;</span>
+<span class="nv">Script_dir</span><span class="o">=</span><span class="s1">&#39;./SSUsearch/scripts&#39;</span>
+<span class="nv">Gene_model_org</span><span class="o">=</span><span class="s1">&#39;./data/SSUsearch_db/Gene_model_org.16s_ecoli_J01695.fasta&#39;</span>
+<span class="nv">Ali_template</span><span class="o">=</span><span class="s1">&#39;./data/SSUsearch_db/Ali_template.silva_ssu.fasta&#39;</span>
 
-Start=&#39;577&#39;  #pick regions for de novo clustering
-End=&#39;727&#39;
-Len_cutoff=&#39;100&#39; # min length for reads picked for the region
+<span class="nv">Start</span><span class="o">=</span><span class="s1">&#39;577&#39;</span>  <span class="c">#pick regions for de novo clustering</span>
+<span class="nv">End</span><span class="o">=</span><span class="s1">&#39;727&#39;</span>
+<span class="nv">Len_cutoff</span><span class="o">=</span><span class="s1">&#39;100&#39;</span> <span class="c"># min length for reads picked for the region</span>
 
-Gene_tax=&#39;./data/SSUsearch_db/Gene_tax.silva_taxa_family.tax&#39; # silva 108 ref
-Gene_db=&#39;./data/SSUsearch_db/Gene_db.silva_108_rep_set.fasta&#39;
+<span class="nv">Gene_tax</span><span class="o">=</span><span class="s1">&#39;./data/SSUsearch_db/Gene_tax.silva_taxa_family.tax&#39;</span> <span class="c"># silva 108 ref</span>
+<span class="nv">Gene_db</span><span class="o">=</span><span class="s1">&#39;./data/SSUsearch_db/Gene_db.silva_108_rep_set.fasta&#39;</span>
 
-Gene_tax_cc=&#39;./data/SSUsearch_db/Gene_tax_cc.greengene_97_otus.tax&#39; # greengene 2012.10 ref for copy correction
-Gene_db_cc=&#39;./data/SSUsearch_db/Gene_db_cc.greengene_97_otus.fasta&#39;
+<span class="nv">Gene_tax_cc</span><span class="o">=</span><span class="s1">&#39;./data/SSUsearch_db/Gene_tax_cc.greengene_97_otus.tax&#39;</span> <span class="c"># greengene 2012.10 ref for copy correction</span>
+<span class="nv">Gene_db_cc</span><span class="o">=</span><span class="s1">&#39;./data/SSUsearch_db/Gene_db_cc.greengene_97_otus.fasta&#39;</span>
 
-###
-### do not need to change lines below
-###
+<span class="c">###</span>
+<span class="c">### do not need to change lines below</span>
+<span class="c">###</span>
 
-### first part of file basename will the label of this sample
-Filename=$(basename(${Seqfile}))
-Tag=${Filename%%.*}
+<span class="c">### first part of file basename will the label of this sample</span>
+<span class="nv">Filename</span><span class="o">=</span><span class="k">$(</span>basename<span class="o">(</span><span class="si">${</span><span class="nv">Seqfile</span><span class="si">}</span><span class="k">)</span><span class="o">)</span>
+<span class="nv">Tag</span><span class="o">=</span><span class="si">${</span><span class="nv">Filename</span><span class="p">%%.*</span><span class="si">}</span>
 
-### make absolute path
-export Hmm=$(readlink -f ${Hmm})
-export Seqfile=$(readlink -f ${Seqfile})
-export Script_dir=$(readlink -f ${Script_dir})
-export Gene_model_org=$(readlink -f ${Gene_model_org})
-export Ali_template=$(readlink -f ${Ali_template})
-export Gene_tax=$(readlink -f ${Gene_tax})
-export Gene_db=$(readlink -f ${Gene_db})
-export Gene_tax_cc=$(readlink -f ${Gene_tax_cc})
-export Gene_db_cc=$(readlink -f ${Gene_db_cc})
+<span class="c">### make absolute path</span>
+<span class="nb">export </span><span class="nv">Hmm</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="si">${</span><span class="nv">Hmm</span><span class="si">}</span><span class="k">)</span>
+<span class="nb">export </span><span class="nv">Seqfile</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="si">${</span><span class="nv">Seqfile</span><span class="si">}</span><span class="k">)</span>
+<span class="nb">export </span><span class="nv">Script_dir</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="si">${</span><span class="nv">Script_dir</span><span class="si">}</span><span class="k">)</span>
+<span class="nb">export </span><span class="nv">Gene_model_org</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="si">${</span><span class="nv">Gene_model_org</span><span class="si">}</span><span class="k">)</span>
+<span class="nb">export </span><span class="nv">Ali_template</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="si">${</span><span class="nv">Ali_template</span><span class="si">}</span><span class="k">)</span>
+<span class="nb">export </span><span class="nv">Gene_tax</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="si">${</span><span class="nv">Gene_tax</span><span class="si">}</span><span class="k">)</span>
+<span class="nb">export </span><span class="nv">Gene_db</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="si">${</span><span class="nv">Gene_db</span><span class="si">}</span><span class="k">)</span>
+<span class="nb">export </span><span class="nv">Gene_tax_cc</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="si">${</span><span class="nv">Gene_tax_cc</span><span class="si">}</span><span class="k">)</span>
+<span class="nb">export </span><span class="nv">Gene_db_cc</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="si">${</span><span class="nv">Gene_db_cc</span><span class="si">}</span><span class="k">)</span>
 </pre></div>
 </div>
 <p>Double check key variables:</p>
-<div class="highlight-python"><div class="highlight"><pre>echo &quot;*** make sure: parameters are right&quot;
-echo &quot;Seqfile: $Seqfile\nCpu: $Cpu\nFilename: $Filename\nTag: $Tag&quot;
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">echo</span> <span class="s2">&quot;*** make sure: parameters are right&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Seqfile: </span><span class="nv">$Seqfile</span><span class="s2">\nCpu: </span><span class="nv">$Cpu</span><span class="s2">\nFilename: </span><span class="nv">$Filename</span><span class="s2">\nTag: </span><span class="nv">$Tag</span><span class="s2">&quot;</span>
 </pre></div>
 </div>
 <p>Do the hmmsearch (<strong>heavy weight lifting part</strong>):</p>
-<div class="highlight-python"><div class="highlight"><pre>cd workdir
-mkdir -p $Tag.ssu.out
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd </span>workdir
+mkdir -p <span class="nv">$Tag</span>.ssu.out
 
-### start hmmsearch
-echo &quot;*** hmmsearch starting&quot;
-time hmmsearch --incE 10 --incdomE 10 --cpu $Cpu \
-  --domtblout $Tag.ssu.out/$Tag.qc.$Gene.hmmdomtblout \
-  -o /dev/null -A $Tag.ssu.out/$Tag.qc.$Gene.sto \
-  $Hmm $Seqfile
-echo &quot;*** hmmsearch finished&quot;
+<span class="c">### start hmmsearch</span>
+<span class="nb">echo</span> <span class="s2">&quot;*** hmmsearch starting&quot;</span>
+<span class="nb">time </span>hmmsearch --incE <span class="m">10</span> --incdomE <span class="m">10</span> --cpu <span class="nv">$Cpu</span> <span class="se">\</span>
+  --domtblout <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.hmmdomtblout <span class="se">\</span>
+  -o /dev/null -A <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.sto <span class="se">\</span>
+  <span class="nv">$Hmm</span> <span class="nv">$Seqfile</span>
+<span class="nb">echo</span> <span class="s2">&quot;*** hmmsearch finished&quot;</span>
 </pre></div>
 </div>
 <p>Parsing the output:</p>
-<div class="highlight-python"><div class="highlight"><pre>python $Script_dir/get-seq-from-hmmout.py \
-    $Tag.ssu.out/$Tag.qc.$Gene.hmmdomtblout \
-    $Tag.ssu.out/$Tag.qc.$Gene.sto \
-    $Tag.ssu.out/$Tag.qc.$Gene
+<div class="highlight-bash"><div class="highlight"><pre>python <span class="nv">$Script_dir</span>/get-seq-from-hmmout.py <span class="se">\</span>
+    <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.hmmdomtblout <span class="se">\</span>
+    <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.sto <span class="se">\</span>
+    <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>
 </pre></div>
 </div>
 <p>Pass hits to mothur aligner:</p>
-<div class="highlight-python"><div class="highlight"><pre>echo &quot;*** Starting mothur align&quot;
-cat  $Gene_model_org $Tag.ssu.out/$Tag.qc.$Gene &gt; $Tag.ssu.out/$Tag.qc.$Gene.RFadded
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">echo</span> <span class="s2">&quot;*** Starting mothur align&quot;</span>
+cat  <span class="nv">$Gene_model_org</span> <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span> &gt; <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.RFadded
 
-# mothur does not allow tab between its flags, thus no indents here
-time mothur &quot;#align.seqs(candidate=$Tag.ssu.out/$Tag.qc.$Gene.RFadded, template=$Ali_template, threshold=0.5, flip=t, processors=$Cpu)&quot;
+<span class="c"># mothur does not allow tab between its flags, thus no indents here</span>
+<span class="nb">time </span>mothur <span class="s2">&quot;#align.seqs(candidate=</span><span class="nv">$Tag</span><span class="s2">.ssu.out/</span><span class="nv">$Tag</span><span class="s2">.qc.</span><span class="nv">$Gene</span><span class="s2">.RFadded, template=</span><span class="nv">$Ali_template</span><span class="s2">, threshold=0.5, flip=t, processors=</span><span class="nv">$Cpu</span><span class="s2">)&quot;</span>
 
 rm -f mothur.*.logfile
 </pre></div>
 </div>
 <p>Get aligned seqs that have &gt; 50% matched to references:</p>
-<div class="highlight-python"><div class="highlight"><pre>python $Script_dir/mothur-align-report-parser-cutoff.py \
-    $Tag.ssu.out/$Tag.qc.$Gene.align.report \
-    $Tag.ssu.out/$Tag.qc.$Gene.align \
-    $Tag.ssu.out/$Tag.qc.$Gene.align.filter \
+<div class="highlight-bash"><div class="highlight"><pre>python <span class="nv">$Script_dir</span>/mothur-align-report-parser-cutoff.py <span class="se">\</span>
+    <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.align.report <span class="se">\</span>
+    <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.align <span class="se">\</span>
+    <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.align.filter <span class="se">\</span>
     0.5
 </pre></div>
 </div>
 <p>Get the unaligned fasta file:</p>
-<div class="highlight-python"><div class="highlight"><pre>python $Script_dir/remove-gap.py $Tag.ssu.out/$Tag.qc.$Gene.align.filter $Tag.ssu.out/$Tag.qc.$Gene.align.filter.fa
+<div class="highlight-bash"><div class="highlight"><pre>python <span class="nv">$Script_dir</span>/remove-gap.py <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.align.filter <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.align.filter.fa
 </pre></div>
 </div>
 <p><strong>Search is done here (the computational intensive part). Hooray! There are two useful output files:</strong></p>
@@ -178,46 +178,46 @@ aligned SSU rRNA gene fragments</li>
 unaligned SSU rRNA gene fragments</li>
 </ul>
 <p>Extract the reads mapped 150bp region in V4 (577-727 in *E.coli* SSU rRNA gene position) for unsupervised clustering:</p>
-<div class="highlight-python"><div class="highlight"><pre>python $Script_dir/region-cut.py $Tag.ssu.out/$Tag.qc.$Gene.align.filter $Start $End $Len_cutoff
+<div class="highlight-bash"><div class="highlight"><pre>python <span class="nv">$Script_dir</span>/region-cut.py <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.align.filter <span class="nv">$Start</span> <span class="nv">$End</span> <span class="nv">$Len_cutoff</span>
 
-mv $Tag.ssu.out/$Tag.qc.$Gene.align.filter.&quot;$Start&quot;to&quot;$End&quot;.cut.lenscreen $Tag.ssu.out/$Tag.forclust
+mv <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.align.filter.<span class="s2">&quot;</span><span class="nv">$Start</span><span class="s2">&quot;</span>to<span class="s2">&quot;</span><span class="nv">$End</span><span class="s2">&quot;</span>.cut.lenscreen <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.forclust
 </pre></div>
 </div>
 <p>Classify SSU rRNA gene seqs using SILVA:</p>
-<div class="highlight-python"><div class="highlight"><pre>rm -f $Tag.ssu.out/$Tag.qc.$Gene.align.filter.*.wang.taxonomy
-mothur &quot;#classify.seqs(fasta=$Tag.ssu.out/$Tag.qc.$Gene.align.filter.fa, template=$Gene_db, taxonomy=$Gene_tax, cutoff=50, processors=$Cpu)&quot;
-mv $Tag.ssu.out/$Tag.qc.$Gene.align.filter.*.wang.taxonomy \
-    $Tag.ssu.out/$Tag.qc.$Gene.align.filter.wang.silva.taxonomy
+<div class="highlight-bash"><div class="highlight"><pre>rm -f <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.align.filter.*.wang.taxonomy
+mothur <span class="s2">&quot;#classify.seqs(fasta=</span><span class="nv">$Tag</span><span class="s2">.ssu.out/</span><span class="nv">$Tag</span><span class="s2">.qc.</span><span class="nv">$Gene</span><span class="s2">.align.filter.fa, template=</span><span class="nv">$Gene_db</span><span class="s2">, taxonomy=</span><span class="nv">$Gene_tax</span><span class="s2">, cutoff=50, processors=</span><span class="nv">$Cpu</span><span class="s2">)&quot;</span>
+mv <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.align.filter.*.wang.taxonomy <span class="se">\</span>
+    <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.align.filter.wang.silva.taxonomy
 </pre></div>
 </div>
 <p>Get the *.taxonomy file has taxon for each SSU rRNA fragment sequence id. We can get the count for each taxon:</p>
-<div class="highlight-python"><div class="highlight"><pre>python $Script_dir/count-taxon.py \
-    $Tag.ssu.out/$Tag.qc.$Gene.align.filter.wang.silva.taxonomy \
-    $Tag.ssu.out/$Tag.qc.$Gene.align.filter.wang.silva.taxonomy.count
+<div class="highlight-bash"><div class="highlight"><pre>python <span class="nv">$Script_dir</span>/count-taxon.py <span class="se">\</span>
+    <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.align.filter.wang.silva.taxonomy <span class="se">\</span>
+    <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.align.filter.wang.silva.taxonomy.count
 rm -f mothur.*.logfile
 </pre></div>
 </div>
 <p>Classify SSU rRNA gene seqs with Greengene for copy correction later:</p>
-<div class="highlight-python"><div class="highlight"><pre>rm -f $Tag.ssu.out/$Tag.qc.$Gene.align.filter.*.wang.taxonomy
-mothur &quot;#classify.seqs(fasta=$Tag.ssu.out/$Tag.qc.$Gene.align.filter.fa, template=$Gene_db_cc, taxonomy=$Gene_tax_cc, cutoff=50, processors=$Cpu)&quot;
-mv $Tag.ssu.out/$Tag.qc.$Gene.align.filter.*.wang.taxonomy \
-    $Tag.ssu.out/$Tag.qc.$Gene.align.filter.wang.gg.taxonomy
+<div class="highlight-bash"><div class="highlight"><pre>rm -f <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.align.filter.*.wang.taxonomy
+mothur <span class="s2">&quot;#classify.seqs(fasta=</span><span class="nv">$Tag</span><span class="s2">.ssu.out/</span><span class="nv">$Tag</span><span class="s2">.qc.</span><span class="nv">$Gene</span><span class="s2">.align.filter.fa, template=</span><span class="nv">$Gene_db_cc</span><span class="s2">, taxonomy=</span><span class="nv">$Gene_tax_cc</span><span class="s2">, cutoff=50, processors=</span><span class="nv">$Cpu</span><span class="s2">)&quot;</span>
+mv <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.align.filter.*.wang.taxonomy <span class="se">\</span>
+    <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.align.filter.wang.gg.taxonomy
 </pre></div>
 </div>
 <p>Count the taxon:</p>
-<div class="highlight-python"><div class="highlight"><pre>python $Script_dir/count-taxon.py \
-    $Tag.ssu.out/$Tag.qc.$Gene.align.filter.wang.gg.taxonomy \
-    $Tag.ssu.out/$Tag.qc.$Gene.align.filter.wang.gg.taxonomy.count
+<div class="highlight-bash"><div class="highlight"><pre>python <span class="nv">$Script_dir</span>/count-taxon.py <span class="se">\</span>
+    <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.align.filter.wang.gg.taxonomy <span class="se">\</span>
+    <span class="nv">$Tag</span>.ssu.out/<span class="nv">$Tag</span>.qc.<span class="nv">$Gene</span>.align.filter.wang.gg.taxonomy.count
 rm -f mothur.*.logfile
 </pre></div>
 </div>
 <p>Check the output directory:</p>
-<div class="highlight-python"><div class="highlight"><pre>ls $Tag.ssu.out
+<div class="highlight-bash"><div class="highlight"><pre>ls <span class="nv">$Tag</span>.ssu.out
 </pre></div>
 </div>
 <p>Here is the a list of output files:
 .. parsed-literal:</p>
-<div class="highlight-python"><div class="highlight"><pre>1c.577to727
+<div class="highlight-bash"><div class="highlight"><pre>1c.577to727
 1c.cut
 1c.forclust
 1c.qc.ssu

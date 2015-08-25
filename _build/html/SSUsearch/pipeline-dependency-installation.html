@@ -73,16 +73,16 @@ can skip this part.</p>
 <div class="section" id="setup-installation-directory">
 <h2>Setup installation directory<a class="headerlink" href="#setup-installation-directory" title="Permalink to this headline">¶</a></h2>
 <p>Go to the working directory:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">notebooks</span>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd</span> /usr/local/notebooks
 </pre></div>
 </div>
 <p>Make a directory called external_tools and go into it:</p>
-<div class="highlight-python"><div class="highlight"><pre>mkdir -p ./external_tools
-cd ./external_tools
+<div class="highlight-bash"><div class="highlight"><pre>mkdir -p ./external_tools
+<span class="nb">cd</span> ./external_tools
 </pre></div>
 </div>
 <p>Make a directory call bin for binaries:</p>
-<div class="highlight-python"><div class="highlight"><pre>mkdir -p ./bin
+<div class="highlight-bash"><div class="highlight"><pre>mkdir -p ./bin
 </pre></div>
 </div>
 </div>
@@ -100,7 +100,7 @@ cp hmmer-3.1b1-linux-intel-x86_64/binaries/hmmsearch ./bin
 </div>
 <div class="section" id="install-mothur">
 <h2>Install mothur<a class="headerlink" href="#install-mothur" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-python"><div class="highlight"><pre>wget http://www.mothur.org/w/images/8/88/Mothur.cen_64.zip -O mothur.zip
+<div class="code bash highlight-bash"><div class="highlight"><pre>wget http://www.mothur.org/w/images/8/88/Mothur.cen_64.zip -O mothur.zip
 
 unzip mothur.zip
 
@@ -112,7 +112,7 @@ cp mothur/mothur ./bin
 </div>
 <div class="section" id="install-rdp-mcclust-tool">
 <h2>Install RDP mcclust tool<a class="headerlink" href="#install-rdp-mcclust-tool" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-python"><div class="highlight"><pre>wget http://lyorn.idyll.org/~gjr/public2/misc/Clustering.tar.gz
+<div class="code bash highlight-bash"><div class="highlight"><pre>wget http://lyorn.idyll.org/~gjr/public2/misc/Clustering.tar.gz
 
 tar -xzvf Clustering.tar.gz
 </pre></div>
@@ -121,7 +121,7 @@ tar -xzvf Clustering.tar.gz
 <div class="section" id="install-python-packages">
 <h2>Install python packages<a class="headerlink" href="#install-python-packages" title="Permalink to this headline">¶</a></h2>
 <p>Skip if you already have the packages installed</p>
-<div class="code bash highlight-python"><div class="highlight"><pre>source ~/.bashrc
+<div class="code bash highlight-bash"><div class="highlight"><pre><span class="nb">source</span> ~/.bashrc
 
 pip install -U pip
 
@@ -133,7 +133,7 @@ pip install biom-format
 </pre></div>
 </div>
 <p>Install numpy, matplotlib, scipy, and pandas</p>
-<div class="code bash highlight-python"><div class="highlight"><pre>pip install numpy matplotlib scipy pandas
+<div class="code bash highlight-bash"><div class="highlight"><pre>pip install numpy matplotlib scipy pandas
 </pre></div>
 </div>
 <p>Alternatively, you can install <strong>anaconda</strong> that have most popular
@@ -142,7 +142,7 @@ python packages installed: <a class="reference external" href="https://store.con
 </div>
 <div class="section" id="check-dependencies-installed">
 <h2>check dependencies installed<a class="headerlink" href="#check-dependencies-installed" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-python"><div class="highlight"><pre>make -f SSUsearch/Makefile tool_check Hmmsearch=hmmsearch Mothur=mothur Flash=flash Mcclust_jar=./Clustering/dist/Clustering.jar
+<div class="code bash highlight-bash"><div class="highlight"><pre>make -f SSUsearch/Makefile tool_check <span class="nv">Hmmsearch</span><span class="o">=</span>hmmsearch <span class="nv">Mothur</span><span class="o">=</span>mothur <span class="nv">Flash</span><span class="o">=</span>flash <span class="nv">Mcclust_jar</span><span class="o">=</span>./Clustering/dist/Clustering.jar
 </pre></div>
 </div>
 </div>
