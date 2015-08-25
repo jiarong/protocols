@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Setup data directory &mdash; Microbial Ecology Protocols 0.2 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Microbial Ecology Protocols 0.2 documentation" href="../index.html" />
+
+
+<style type="text/css">
+<!-- github-based editing disabled; set github_base_account
+     and github_project -->
+#editor-trap.toggled {
+  display: none;
+}
+</style>
+
+
+
+<!-- Google Analytics JS is disabled; set google_analytics_id -->
+
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+  <div class="section" id="setup-data-directory">
+<h1>Setup data directory<a class="headerlink" href="#setup-data-directory" title="Permalink to this headline">¶</a></h1>
+<p>First go to a working dirtory:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">notebooks</span>
+</pre></div>
+</div>
+<p>Make a directory for data:</p>
+<div class="highlight-python"><div class="highlight"><pre>mkdir -p ./data
+</pre></div>
+</div>
+<p>Change directory into ./data:</p>
+<div class="highlight-python"><div class="highlight"><pre>cd ./data
+</pre></div>
+</div>
+</div>
+<div class="section" id="download-database-files">
+<h1>Download database files<a class="headerlink" href="#download-database-files" title="Permalink to this headline">¶</a></h1>
+<p>Download the database files we need:</p>
+<div class="highlight-python"><div class="highlight"><pre>curl -O http://lyorn.idyll.org/~gjr/public2/misc/SSUsearch_db.tgz
+</pre></div>
+</div>
+<p>Unzip the file:</p>
+<div class="highlight-python"><div class="highlight"><pre>tar -xzvf SSUsearch_db.tgz
+</pre></div>
+</div>
+<p>Output should look like the following:</p>
+<div class="highlight-python"><div class="highlight"><pre>x SSUsearch_db/
+x SSUsearch_db/Gene_db.silva_108_rep_set.fasta
+x SSUsearch_db/Gene_tax.silva_taxa_family.tax
+x SSUsearch_db/Gene_model_org.16s_ecoli_J01695.fasta
+x SSUsearch_db/Gene_db_cc.greengene_97_otus.fasta
+x SSUsearch_db/Gene_tax_cc.greengene_97_otus.tax
+x SSUsearch_db/Copy_db.copyrighter.txt
+x SSUsearch_db/Ali_template.silva_ssu.fasta
+x SSUsearch_db/readme
+x SSUsearch_db/Ali_template.silva_lsu.fasta
+x SSUsearch_db/Ali_template.test.fasta
+x SSUsearch_db/Ali_template.test_lsu.fasta
+x SSUsearch_db/Gene_db.lsu_silva_rep.fasta
+x SSUsearch_db/Gene_db.ssu_rdp_rep.fasta
+x SSUsearch_db/Gene_tax.lsu_silva_rep.tax
+x SSUsearch_db/Gene_tax.ssu_rdp_rep.tax
+x SSUsearch_db/Hmm.lsu.hmm
+x SSUsearch_db/clean.sh
+x SSUsearch_db/Hmm.ssu.hmm
+</pre></div>
+</div>
+</div>
+<div class="section" id="download-a-small-test-dataset">
+<h1>download a small test dataset<a class="headerlink" href="#download-a-small-test-dataset" title="Permalink to this headline">¶</a></h1>
+<p><strong>ATT: for real (larger) dataset, make sure there is enough disk space.</strong></p>
+<p>Download a directory of files:</p>
+<div class="highlight-python"><div class="highlight"><pre>wget -r -np -nH --cut-dir=4 --reject=&quot;index.html*&quot; http://lyorn.idyll.org/~gjr/public2/misc/SSUsearch/test/
+
+ls test/data/
+</pre></div>
+</div>
+</div>
+<div class="section" id="this-tutorial-assumes-that-you-ready-finished-quality-trimming-and-also-paired-end-merge-if-you-paired-end-reads-overlap">
+<h1>This tutorial assumes that you ready finished quality trimming, and also paired end merge, if you paired end reads overlap.<a class="headerlink" href="#this-tutorial-assumes-that-you-ready-finished-quality-trimming-and-also-paired-end-merge-if-you-paired-end-reads-overlap" title="Permalink to this headline">¶</a></h1>
+<p>For quality trimming, we recommend
+<a class="reference external" href="http://www.usadellab.org/cms/?page=trimmomatic">trimmomatic</a> written
+in java, or
+<a class="reference external" href="https://code.google.com/p/ea-utils/wiki/FastqMcf">fastq-mcf</a> written
+in C.</p>
+<p>For paired end reads merging, we recommend
+<a class="reference external" href="https://github.com/neufeld/pandaseq">pandseq</a> or
+<a class="reference external" href="http://ccb.jhu.edu/software/FLASH/">flash</a></p>
+</div>
+
+
+
+
+<!-- disqus commenting disabled; set disqus_shortname -->
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Setup data directory</a></li>
+<li><a class="reference internal" href="#download-database-files">Download database files</a></li>
+<li><a class="reference internal" href="#download-a-small-test-dataset">download a small test dataset</a></li>
+<li><a class="reference internal" href="#this-tutorial-assumes-that-you-ready-finished-quality-trimming-and-also-paired-end-merge-if-you-paired-end-reads-overlap">This tutorial assumes that you ready finished quality trimming, and also paired end merge, if you paired end reads overlap.</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/SSUsearch/data-preparation.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2015, Jiarong Guo.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="../_sources/SSUsearch/data-preparation.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+
+
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', ]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  </body>
+</html>

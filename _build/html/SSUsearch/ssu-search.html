@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>README &mdash; Microbial Ecology Protocols 0.2 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Microbial Ecology Protocols 0.2 documentation" href="../index.html" />
+
+
+<style type="text/css">
+<!-- github-based editing disabled; set github_base_account
+     and github_project -->
+#editor-trap.toggled {
+  display: none;
+}
+</style>
+
+
+
+<!-- Google Analytics JS is disabled; set google_analytics_id -->
+
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+  <p>Set up working directory:</p>
+<div class="highlight-python"><div class="highlight"><pre>cd /usr/local/notebooks
+mkdir -p ./workdir
+</pre></div>
+</div>
+<p>Check seqfile files to process in data directory (make sure you still remember the data directory):</p>
+<div class="highlight-python"><div class="highlight"><pre>ls ./data/test/data
+</pre></div>
+</div>
+<div class="section" id="readme">
+<h1>README<a class="headerlink" href="#readme" title="Permalink to this headline">¶</a></h1>
+<p><a href="#id1"><span class="problematic" id="id2">**</span></a>This part of pipeline search for the SSU rRNA gene fragments, classify them, and extract reads aligned specific region. It is also heavy lifting part of the whole pipeline (more cpu will help).</p>
+<p>This part works with one seqfile a time. You just need to change the &#8220;Seqfile&#8221; and maybe other parameters in the two cells bellow.**</p>
+<p>If your computer has <strong>many processors</strong>, there are two ways to make use of the resource:</p>
+<ol class="arabic simple">
+<li>Set &#8220;Cpu&#8221; higher number.</li>
+<li>make more copies of this notebook (click &#8220;File&#8221; then &#8220;Make a copy&#8221; in
+menu bar), so you can run the step on multiple files at the same
+time.</li>
+</ol>
+<p>(Again we assume the &#8220;Seqfile&#8221; is quality trimmed.)</p>
+<p><a href="#id3"><span class="problematic" id="id4">**</span></a>Here we will process one file at a time; set the &#8220;Seqfile&#8221; variable to the seqfile name to be be processed</p>
+<p>First part of seqfile basename (separated by &#8221;.&#8221;) will be the label of this sample, so named it properly.**</p>
+<p>e.g. for &#8220;/usr/local/notebooks/data/test/data/1c.fa&#8221;, &#8220;1c&#8221; will the
+label of this sample.</p>
+<p>Set the Seqfile variable to the sequence file to process:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Seqfile</span><span class="o">=</span><span class="s">&#39;./data/test/data/1c.fa&#39;</span>
+</pre></div>
+</div>
+<p>Other parameters to set:</p>
+<div class="highlight-python"><div class="highlight"><pre>Cpu=&#39;2&#39;   # number of maxixum threads for search and alignment
+Hmm=&#39;./data/SSUsearch_db/Hmm.ssu.hmm&#39;   # hmm model for ssu
+Gene=&#39;ssu&#39;
+Script_dir=&#39;./SSUsearch/scripts&#39;
+Gene_model_org=&#39;./data/SSUsearch_db/Gene_model_org.16s_ecoli_J01695.fasta&#39;
+Ali_template=&#39;./data/SSUsearch_db/Ali_template.silva_ssu.fasta&#39;
+
+Start=&#39;577&#39;  #pick regions for de novo clustering
+End=&#39;727&#39;
+Len_cutoff=&#39;100&#39; # min length for reads picked for the region
+
+Gene_tax=&#39;./data/SSUsearch_db/Gene_tax.silva_taxa_family.tax&#39; # silva 108 ref
+Gene_db=&#39;./data/SSUsearch_db/Gene_db.silva_108_rep_set.fasta&#39;
+
+Gene_tax_cc=&#39;./data/SSUsearch_db/Gene_tax_cc.greengene_97_otus.tax&#39; # greengene 2012.10 ref for copy correction
+Gene_db_cc=&#39;./data/SSUsearch_db/Gene_db_cc.greengene_97_otus.fasta&#39;
+
+###
+### do not need to change lines below
+###
+
+### first part of file basename will the label of this sample
+Filename=$(basename(${Seqfile}))
+Tag=${Filename%%.*}
+
+### make absolute path
+export Hmm=$(readlink -f ${Hmm})
+export Seqfile=$(readlink -f ${Seqfile})
+export Script_dir=$(readlink -f ${Script_dir})
+export Gene_model_org=$(readlink -f ${Gene_model_org})
+export Ali_template=$(readlink -f ${Ali_template})
+export Gene_tax=$(readlink -f ${Gene_tax})
+export Gene_db=$(readlink -f ${Gene_db})
+export Gene_tax_cc=$(readlink -f ${Gene_tax_cc})
+export Gene_db_cc=$(readlink -f ${Gene_db_cc})
+</pre></div>
+</div>
+<p>Double check key variables:</p>
+<div class="highlight-python"><div class="highlight"><pre>echo &quot;*** make sure: parameters are right&quot;
+echo &quot;Seqfile: $Seqfile\nCpu: $Cpu\nFilename: $Filename\nTag: $Tag&quot;
+</pre></div>
+</div>
+<p>Do the hmmsearch (<strong>heavy weight lifting part</strong>):</p>
+<div class="highlight-python"><div class="highlight"><pre>cd workdir
+mkdir -p $Tag.ssu.out
+
+### start hmmsearch
+echo &quot;*** hmmsearch starting&quot;
+time hmmsearch --incE 10 --incdomE 10 --cpu $Cpu \
+  --domtblout $Tag.ssu.out/$Tag.qc.$Gene.hmmdomtblout \
+  -o /dev/null -A $Tag.ssu.out/$Tag.qc.$Gene.sto \
+  $Hmm $Seqfile
+echo &quot;*** hmmsearch finished&quot;
+</pre></div>
+</div>
+<p>Parsing the output:</p>
+<div class="highlight-python"><div class="highlight"><pre>python $Script_dir/get-seq-from-hmmout.py \
+    $Tag.ssu.out/$Tag.qc.$Gene.hmmdomtblout \
+    $Tag.ssu.out/$Tag.qc.$Gene.sto \
+    $Tag.ssu.out/$Tag.qc.$Gene
+</pre></div>
+</div>
+<p>Pass hits to mothur aligner:</p>
+<div class="highlight-python"><div class="highlight"><pre>echo &quot;*** Starting mothur align&quot;
+cat  $Gene_model_org $Tag.ssu.out/$Tag.qc.$Gene &gt; $Tag.ssu.out/$Tag.qc.$Gene.RFadded
+
+# mothur does not allow tab between its flags, thus no indents here
+time mothur &quot;#align.seqs(candidate=$Tag.ssu.out/$Tag.qc.$Gene.RFadded, template=$Ali_template, threshold=0.5, flip=t, processors=$Cpu)&quot;
+
+rm -f mothur.*.logfile
+</pre></div>
+</div>
+<p>Get aligned seqs that have &gt; 50% matched to references:</p>
+<div class="highlight-python"><div class="highlight"><pre>python $Script_dir/mothur-align-report-parser-cutoff.py \
+    $Tag.ssu.out/$Tag.qc.$Gene.align.report \
+    $Tag.ssu.out/$Tag.qc.$Gene.align \
+    $Tag.ssu.out/$Tag.qc.$Gene.align.filter \
+    0.5
+</pre></div>
+</div>
+<p>Get the unaligned fasta file:</p>
+<div class="highlight-python"><div class="highlight"><pre>python $Script_dir/remove-gap.py $Tag.ssu.out/$Tag.qc.$Gene.align.filter $Tag.ssu.out/$Tag.qc.$Gene.align.filter.fa
+</pre></div>
+</div>
+<p><strong>Search is done here (the computational intensive part). Hooray! There are two useful output files:</strong></p>
+<ul class="simple">
+<li>$Tag.ssu.out/$Tag.qc.$Gene.align.filter:
+aligned SSU rRNA gene fragments</li>
+<li>$Tag.ssu.out/$Tag.qc.$Gene.align.filter.fa:
+unaligned SSU rRNA gene fragments</li>
+</ul>
+<p>Extract the reads mapped 150bp region in V4 (577-727 in *E.coli* SSU rRNA gene position) for unsupervised clustering:</p>
+<div class="highlight-python"><div class="highlight"><pre>python $Script_dir/region-cut.py $Tag.ssu.out/$Tag.qc.$Gene.align.filter $Start $End $Len_cutoff
+
+mv $Tag.ssu.out/$Tag.qc.$Gene.align.filter.&quot;$Start&quot;to&quot;$End&quot;.cut.lenscreen $Tag.ssu.out/$Tag.forclust
+</pre></div>
+</div>
+<p>Classify SSU rRNA gene seqs using SILVA:</p>
+<div class="highlight-python"><div class="highlight"><pre>rm -f $Tag.ssu.out/$Tag.qc.$Gene.align.filter.*.wang.taxonomy
+mothur &quot;#classify.seqs(fasta=$Tag.ssu.out/$Tag.qc.$Gene.align.filter.fa, template=$Gene_db, taxonomy=$Gene_tax, cutoff=50, processors=$Cpu)&quot;
+mv $Tag.ssu.out/$Tag.qc.$Gene.align.filter.*.wang.taxonomy \
+    $Tag.ssu.out/$Tag.qc.$Gene.align.filter.wang.silva.taxonomy
+</pre></div>
+</div>
+<p>Get the *.taxonomy file has taxon for each SSU rRNA fragment sequence id. We can get the count for each taxon:</p>
+<div class="highlight-python"><div class="highlight"><pre>python $Script_dir/count-taxon.py \
+    $Tag.ssu.out/$Tag.qc.$Gene.align.filter.wang.silva.taxonomy \
+    $Tag.ssu.out/$Tag.qc.$Gene.align.filter.wang.silva.taxonomy.count
+rm -f mothur.*.logfile
+</pre></div>
+</div>
+<p>Classify SSU rRNA gene seqs with Greengene for copy correction later:</p>
+<div class="highlight-python"><div class="highlight"><pre>rm -f $Tag.ssu.out/$Tag.qc.$Gene.align.filter.*.wang.taxonomy
+mothur &quot;#classify.seqs(fasta=$Tag.ssu.out/$Tag.qc.$Gene.align.filter.fa, template=$Gene_db_cc, taxonomy=$Gene_tax_cc, cutoff=50, processors=$Cpu)&quot;
+mv $Tag.ssu.out/$Tag.qc.$Gene.align.filter.*.wang.taxonomy \
+    $Tag.ssu.out/$Tag.qc.$Gene.align.filter.wang.gg.taxonomy
+</pre></div>
+</div>
+<p>Count the taxon:</p>
+<div class="highlight-python"><div class="highlight"><pre>python $Script_dir/count-taxon.py \
+    $Tag.ssu.out/$Tag.qc.$Gene.align.filter.wang.gg.taxonomy \
+    $Tag.ssu.out/$Tag.qc.$Gene.align.filter.wang.gg.taxonomy.count
+rm -f mothur.*.logfile
+</pre></div>
+</div>
+<p>Check the output directory:</p>
+<div class="highlight-python"><div class="highlight"><pre>ls $Tag.ssu.out
+</pre></div>
+</div>
+<p>Here is the a list of output files:
+.. parsed-literal:</p>
+<div class="highlight-python"><div class="highlight"><pre>1c.577to727
+1c.cut
+1c.forclust
+1c.qc.ssu
+1c.qc.ssu.align
+1c.qc.ssu.align.filter
+1c.qc.ssu.align.filter.577to727.cut
+1c.qc.ssu.align.filter.577to727.cut.lenscreen.fa
+1c.qc.ssu.align.filter.fa
+1c.qc.ssu.align.filter.greengene_97_otus.wang.tax.summary
+1c.qc.ssu.align.filter.silva_taxa_family.wang.tax.summary
+1c.qc.ssu.align.filter.wang.gg.taxonomy
+1c.qc.ssu.align.filter.wang.gg.taxonomy.count
+1c.qc.ssu.align.filter.wang.silva.taxonomy
+1c.qc.ssu.align.filter.wang.silva.taxonomy.count
+1c.qc.ssu.align.report
+1c.qc.ssu.hmmdomtblout
+1c.qc.ssu.hmmdomtblout.parsedToDictWithScore.pickle
+1c.qc.ssu.hmmtblout
+1c.qc.ssu.RFadded
+1c.qc.ssu.sto
+</pre></div>
+</div>
+<p><strong>This part of pipeline (working with one sequence file) finishes here. Next we will combine samples for community analysis (see unsupervised analysis).</strong></p>
+<p><strong>Following are files useful for community analysis</strong>:</p>
+<ul class="simple">
+<li>1c.577to727: aligned fasta file of seqs mapped to target region for
+de novo clustering</li>
+<li>1c.qc.ssu.align.filter: aligned fasta file of all SSU rRNA gene
+fragments</li>
+<li>1c.qc.ssu.align.filter.wang.gg.taxonomy: Greengene taxonomy (for copy
+correction)</li>
+<li>1c.qc.ssu.align.filter.wang.silva.taxonomy: SILVA taxonomy</li>
+</ul>
+</div>
+
+
+
+
+<!-- disqus commenting disabled; set disqus_shortname -->
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/SSUsearch/ssu-search.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2015, Jiarong Guo.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="../_sources/SSUsearch/ssu-search.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+
+
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', ]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  </body>
+</html>

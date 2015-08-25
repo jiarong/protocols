@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>&lt;no title&gt; &mdash; Microbial Ecology Protocols 0.2 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Microbial Ecology Protocols 0.2 documentation" href="../index.html" />
+
+
+<style type="text/css">
+<!-- github-based editing disabled; set github_base_account
+     and github_project -->
+#editor-trap.toggled {
+  display: none;
+}
+</style>
+
+
+
+<!-- Google Analytics JS is disabled; set google_analytics_id -->
+
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+  <p>Set another directory for unsupervised analysis:</p>
+<div class="highlight-python"><div class="highlight"><pre>cd /usr/local/notebooks
+mkdir -p ./workdir/clust
+</pre></div>
+</div>
+<p>Set parameters:</p>
+<div class="highlight-python"><div class="highlight"><pre>Prefix=&#39;SS&#39;    # name for the analysis run
+Script_dir=&#39;./SSUsearch/scripts&#39;
+Wkdir=&#39;./workdir&#39;
+Mcclust_jar=&#39;./external_tools/Clustering/dist/Clustering.jar&#39;
+Java_xmx=&#39;10g&#39;
+Java_gc_threads=&#39;2&#39;
+Otu_dist_cutoff=&#39;0.05&#39;
+Design=&#39;./data/test/SS.design&#39;
+
+# get absolute path
+import os
+Script_dir=$(readlink -f ${Script_dir})
+Wkdir=$(readlink -f ${Wkdir})
+Mcclust_jar=$(readlink -f ${Mcclust_jar})
+Design=$(readlink -f ${Design})
+</pre></div>
+</div>
+<p>Go the clust direcory:</p>
+<div class="highlight-python"><div class="highlight"><pre>cd ./workdir/clust
+</pre></div>
+</div>
+<p>Combine all the aligned sequences from each sample:</p>
+<blockquote>
+<div>cat $Wkdir/<em>.ssu.out/</em>.forclust &gt; combined_seqs.afa</div></blockquote>
+<p>Make group file for mcclust and mothur. First part of the file basename will be the group label, e.g. file &#8220;aa.bb.cc&#8221; will have &#8220;aa&#8221; as group label:</p>
+<div class="highlight-python"><div class="highlight"><pre>python $Script_dir/make-groupfile.py $Prefix.groups $Wkdir/*.ssu.out/*.forclust
+</pre></div>
+</div>
+<p>Dereplication with mcclust:</p>
+<div class="highlight-python"><div class="highlight"><pre>echo &quot;*** Starting mcclust derep..&quot;
+time java -Xmx$Java_xmx -XX:+UseParallelOldGC -XX:ParallelGCThreads=$Java_gc_threads -jar $Mcclust_jar derep -a -o derep.fasta temp.mcclust.names temp.txt combined_seqs.afa
+rm temp.txt
+</pre></div>
+</div>
+<p>Precluster to collapse sequences with 1 base difference (most likely caused by sequencing errors):</p>
+<div class="highlight-python"><div class="highlight"><pre>#Convert mcclust names to mothur names
+python $Script_dir/mcclust2mothur_names_file.py temp.mcclust.names temp.mothur.names
+
+echo &quot;***starting preclust..&quot;
+# output: derep.precluster.fasta, derep.precluster.names
+mothur &quot;#pre.cluster(fasta=derep.fasta, diffs=1, name=temp.mothur.names)&quot;
+
+#Convert names back to mcclust
+python $Script_dir/mothur2mcclust_names_file.py derep.precluster.names $Prefix.names
+</pre></div>
+</div>
+<p>Make distance matrix:</p>
+<div class="highlight-python"><div class="highlight"><pre>time java -Xmx$Java_xmx -XX:+UseParallelOldGC -XX:ParallelGCThreads=$Java_gc_threads -jar $Mcclust_jar dmatrix -l 25 -o matrix.bin -i $Prefix.names -I derep.precluster.fasta
+</pre></div>
+</div>
+<p>Clustering with mcclust:</p>
+<div class="highlight-python"><div class="highlight"><pre>time java -Xmx$Java_xmx -XX:+UseParallelOldGC -XX:ParallelGCThreads=$Java_gc_threads -jar $Mcclust_jar cluster -m upgma -i $Prefix.names -s $Prefix.groups -o complete.clust -d matrix.bin
+</pre></div>
+</div>
+<p>Convert clust results to mothur list:</p>
+<div class="highlight-python"><div class="highlight"><pre>python $Script_dir/mcclust2mothur-list-cutoff.py complete.clust $Prefix.list $Otu_dist_cutoff
+</pre></div>
+</div>
+<p>Remove &#8221;:&#8221; in sequence names (mothur automatically converts &#8221;:&#8221; to &#8220;_&#8221;):</p>
+<div class="highlight-python"><div class="highlight"><pre>sed -i &#39;s/:/_/g&#39; $Prefix.names $Prefix.groups $Prefix.list
+echo &quot;*** Replace &#39;:&#39; with &#39;_&#39; in seq names (original illumina name has &#39;:&#39; in them)&quot;
+</pre></div>
+</div>
+<p>Get representitives of each OTU at OTU distance cutoff defined at top of this page:</p>
+<div class="highlight-python"><div class="highlight"><pre>java -jar $Mcclust_jar rep-seqs -c -l -s complete.clust $Otu_dist_cutoff combined_seqs.afa
+mv complete.clust_rep_seqs.fasta otu_rep_align.fa
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>Get OTU table::</dt>
+<dd>mothur &#8220;#make.shared(list=$Prefix.list, group=$Prefix.groups, label=$Otu_dist_cutoff);&#8221;</dd>
+</dl>
+<p>Get consensus taxonomy for each OTU:</p>
+<div class="highlight-python"><div class="highlight"><pre>cat $Wkdir/*.ssu.out/*.silva.taxonomy &gt; $Prefix.taxonomy
+mothur &quot;#classify.otu(list=$Prefix.list, taxonomy=$Prefix.taxonomy, label=$Otu_dist_cutoff)&quot;
+</pre></div>
+</div>
+<p>Make biom file:</p>
+<div class="highlight-python"><div class="highlight"><pre>mothur &quot;#make.biom(shared=$Prefix.shared, constaxonomy=$Prefix.$Otu_dist_cutoff.cons.taxonomy)&quot;
+mv $Prefix.$Otu_dist_cutoff.biom $Prefix.biom
+
+# clean up tempfiles
+!rm -f mothur.*.logfile *rabund complete* derep.fasta matrix.bin nonoverlapping.bin temp.*
+</pre></div>
+</div>
+<p><strong>With SS.groups, SS.names and SS.list</strong>, most diversity analysis can be done by mothur. You can look at <a class="reference external" href="http://www.mothur.org/wiki/454_SOP">mothur wiki</a> for details (Do not forgot to do even sampling before beta-diversity analysis).</p>
+<p><strong>SS.biom file can used in most tools. (qiime, rdp, and phyloseq)</strong></p>
+<p>Since the purpose of this tutorial is to show our new pipeline, we will skip details of community analysis with mothur. Following are some common commands in mothur:</p>
+<div class="highlight-python"><div class="highlight"><pre>mothur &quot;#make.shared(biom=$Prefix.biom); sub.sample(shared=$Prefix.shared); summary.single(calc=nseqs-coverage-sobs-chao-shannon-invsimpson); dist.shared(calc=braycurtis); pcoa(phylip=$Prefix.userLabel.subsample.braycurtis.userLabel.lt.dist); nmds(phylip=$Prefix.userLabel.subsample.braycurtis.userLabel.lt.dist); amova(phylip=$Prefix.userLabel.subsample.braycurtis.userLabel.lt.dist, design=$Design); tree.shared(calc=braycurtis); unifrac.weighted(tree=$Prefix.userLabel.subsample.braycurtis.userLabel.tre, group=$Design, random=T)&quot;
+!rm -f mothur.*.logfile;
+!rm -f *.rabund
+</pre></div>
+</div>
+<p>Some simple visualization:</p>
+<div class="highlight-python"><div class="highlight"><pre># alpha diveristy index
+python $Script_dir/plot-diversity-index.py &quot;userLabel&quot; &quot;chao,shannon,invsimpson&quot; &quot;c,d&quot; &quot;SS.userLabel.subsample.groups.summary&quot; &quot;test&quot; &quot;test.alpha&quot;
+
+# taxon distribution
+python $Script_dir/plot-taxa-count.py 2 test.taxa.dist ../*.ssu.out/*.silva.taxonomy.count
+
+# ordination
+python $Script_dir/plot-pcoa.py  SS.userLabel.subsample.braycurtis.userLabel.lt.pcoa.axes  SS.userLabel.subsample.braycurtis.userLabel.lt.pcoa.loadings  test.beta.pcoa
+</pre></div>
+</div>
+
+
+
+
+<!-- disqus commenting disabled; set disqus_shortname -->
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/SSUsearch/unsupervised-analysis.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+    <div class="footer">
+      &copy;2015, Jiarong Guo.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="../_sources/SSUsearch/unsupervised-analysis.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+
+
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', ]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  </body>
+</html>
