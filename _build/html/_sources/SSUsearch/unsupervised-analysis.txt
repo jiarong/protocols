@@ -16,7 +16,6 @@ Set parameters::
     Design='./data/test/SS.design'
 
     # get absolute path
-    import os
     Script_dir=$(readlink -f ${Script_dir})
     Wkdir=$(readlink -f ${Wkdir})
     Mcclust_jar=$(readlink -f ${Mcclust_jar})
@@ -26,7 +25,7 @@ Go the clust direcory::
 
     cd ./workdir/clust
 
-Combine all the aligned sequences from each sample:
+Combine all the aligned sequences from each sample::
 
     cat $Wkdir/*.ssu.out/*.forclust > combined_seqs.afa
 

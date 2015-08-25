@@ -72,7 +72,6 @@ mkdir -p ./workdir/clust
 <span class="nv">Design</span><span class="o">=</span><span class="s1">&#39;./data/test/SS.design&#39;</span>
 
 <span class="c"># get absolute path</span>
-import os
 <span class="nv">Script_dir</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="si">${</span><span class="nv">Script_dir</span><span class="si">}</span><span class="k">)</span>
 <span class="nv">Wkdir</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="si">${</span><span class="nv">Wkdir</span><span class="si">}</span><span class="k">)</span>
 <span class="nv">Mcclust_jar</span><span class="o">=</span><span class="k">$(</span>readlink -f <span class="si">${</span><span class="nv">Mcclust_jar</span><span class="si">}</span><span class="k">)</span>
@@ -84,8 +83,9 @@ import os
 </pre></div>
 </div>
 <p>Combine all the aligned sequences from each sample:</p>
-<blockquote>
-<div>cat $Wkdir/<em>.ssu.out/</em>.forclust &gt; combined_seqs.afa</div></blockquote>
+<div class="highlight-bash"><div class="highlight"><pre>cat <span class="nv">$Wkdir</span>/*.ssu.out/*.forclust &gt; combined_seqs.afa
+</pre></div>
+</div>
 <p>Make group file for mcclust and mothur. First part of the file basename will be the group label, e.g. file &#8220;aa.bb.cc&#8221; will have &#8220;aa&#8221; as group label:</p>
 <div class="highlight-bash"><div class="highlight"><pre>python <span class="nv">$Script_dir</span>/make-groupfile.py <span class="nv">$Prefix</span>.groups <span class="nv">$Wkdir</span>/*.ssu.out/*.forclust
 </pre></div>
