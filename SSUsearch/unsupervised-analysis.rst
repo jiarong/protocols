@@ -1,3 +1,5 @@
+Unsupervised analysis
+~~~~~~~~~~~~~~~~~~~~~
 
 Set another directory for unsupervised analysis::
 

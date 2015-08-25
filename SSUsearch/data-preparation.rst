@@ -1,10 +1,7 @@
 
 
-
-Setup data directory
+Data preparation
 ~~~~~~~~~~~~~~~~~~~~
-
-.. default-literal-block:: code-block bash
 
 First go to a working dirtory::
 
@@ -67,8 +64,7 @@ Download a directory of files::
     ls test/data/
 
 
-This tutorial assumes that you ready finished quality trimming, and also paired end merge, if you paired end reads overlap.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**This tutorial assumes that you ready finished quality trimming, and also paired end merge, if you paired end reads overlap.**
 
 For quality trimming, we recommend
 `trimmomatic <http://www.usadellab.org/cms/?page=trimmomatic>`_ written

@@ -1,3 +1,5 @@
+Search SSU rRNA gene
+~~~~~~~~~~~~~~~~~~~~~
 
 Set up working directory::
 
@@ -9,7 +11,7 @@ Check seqfile files to process in data directory (make sure you still remember t
     ls ./data/test/data
 
 README
-======
+~~~~~~
 
 **This part of pipeline search for the SSU rRNA gene fragments, classify them, and extract reads aligned specific region. It is also heavy lifting part of the whole pipeline (more cpu will help).**
 
