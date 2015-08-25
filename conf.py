@@ -108,7 +108,22 @@ todo_include_todos = False
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'alabaster'
+
+#html_theme = 'alabaster'
+
+#from better import better_theme_path
+#html_theme_path = [better_theme_path]
+#html_theme = 'better'
+
+html_theme = 'default'
+
+#html_style = '/default.css'  # hack for default sphinx theme
+html_style = 'labibi.css'  # hack for default sphinx theme
+
+# Theme options are theme-specific and customize the look and feel of a theme
+# further.  For a list of options available for each theme, see the
+# documentation.
+html_theme_options = {'nosidebar':True}
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the

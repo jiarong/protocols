@@ -11,9 +11,9 @@ Check seqfile files to process in data directory (make sure you still remember t
 README
 ======
 
-**This part of pipeline search for the SSU rRNA gene fragments, classify them, and extract reads aligned specific region. It is also heavy lifting part of the whole pipeline (more cpu will help).
+**This part of pipeline search for the SSU rRNA gene fragments, classify them, and extract reads aligned specific region. It is also heavy lifting part of the whole pipeline (more cpu will help).**
 
-This part works with one seqfile a time. You just need to change the "Seqfile" and maybe other parameters in the two cells bellow.**
+**This part works with one seqfile a time. You just need to change the "Seqfile" and maybe other parameters in the two cells bellow.**
 
 If your computer has **many processors**, there are two ways to make use of the resource:
 
@@ -25,16 +25,19 @@ If your computer has **many processors**, there are two ways to make use of the 
 
 (Again we assume the "Seqfile" is quality trimmed.)
 
-**Here we will process one file at a time; set the "Seqfile" variable to the seqfile name to be be processed
+**Again, we will process one file at a time; set the "Seqfile" variable to the seqfile name to be be processed**
 
-First part of seqfile basename (separated by ".") will be the label of this sample, so named it properly.**
+First part of seqfile basename (separated by ".") will be the label of this sample, so named it properly (unique).**
 
 e.g. for "/usr/local/notebooks/data/test/data/1c.fa", "1c" will the
 label of this sample.
 
-Set the Seqfile variable to the sequence file to process::
+**Set the Seqfile variable to the sequence file to process**::
 
     Seqfile='./data/test/data/1c.fa'
+    #Seqfile='./data/test/data/1d.fa'
+    #Seqfile='./data/test/data/2c.fa'
+    #Seqfile='./data/test/data/2d.fa'
 
 Other parameters to set::
 

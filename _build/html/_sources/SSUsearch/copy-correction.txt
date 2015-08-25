@@ -6,7 +6,7 @@ Set up a directory::
 
     cd /usr/local/notebooks
     ### set up directory
-    !mkdir -p ./workdir/copy_correction
+    mkdir -p ./workdir/copy_correction
 
 Set up parameters::
 

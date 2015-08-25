@@ -8,7 +8,7 @@
     
     <title>Overview &mdash; Microbial Ecology Protocols 0.2 documentation</title>
     
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/labibi.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Microbial Ecology Protocols 0.2 documentation" href="../index.html" />
-    <link rel="up" title="Table of Content" href="index.html" />
-    <link rel="prev" title="Table of Content" href="index.html" />
+    <link rel="up" title="SSUsearch" href="index.html" />
+    <link rel="prev" title="SSUsearch" href="index.html" />
 
 
 <style type="text/css">
@@ -42,11 +42,23 @@
 
 
   </head>
-  <body role="document">  
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="SSUsearch"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Microbial Ecology Protocols 0.2 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">SSUsearch</a> &raquo;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
-        <div class="bodywrapper">
           <div class="body" role="main">
             
   
@@ -57,22 +69,14 @@ diversity analysis. THe pipeline requires HMMER3.1, mothur, RDP mcclust,
 and python numpy, pandas, scipy, matplotlib, and screed package.
 Following are step by step tutorial for this pipeline:</p>
 <ol class="arabic simple">
-<li><a class="reference external" href="./pipeline-dependency-installation.rst">Install dependencies</a>.
+<li><a class="reference external" href="./pipeline-dependency-installation.html">Install dependencies</a>.
 If running amazon EC2 with ami &#8220;<strong>ami-d87571b0</strong>&#8221;, skip this step.</li>
-<li><a class="reference external" href="./data-preparation.rst">Database and dataset preparation</a></li>
-<li><a class="reference external" href="./ssu-search.rst">SSU rRNA gene fragment search and
-classification</a>. ssu-search-Copy1.rst,
-ssu-search-Copy2.rst, ssu-search-Copy3.rst, and
-ssu-search-Copy4.rst are the ones to run for test data</li>
-<li><a class="reference external" href="./unsupervised-analysis.rst">Unsupervised analysis</a></li>
-<li><a class="reference external" href="./copy-correction.rst">Copy correction</a></li>
+<li><a class="reference external" href="./data-preparation.html">Database and dataset preparation</a></li>
+<li><a class="reference external" href="./ssu-search.html">SSU rRNA gene fragment search and
+classification</a>. Apply steps here to all samples (1c.fa, 1d.fa, 2c.fa, 2d.fa in the test data set) one by one. Only variable called <strong>&#8220;Seqfile&#8221;</strong> needs to be changed to sequence file path of each sample.</li>
+<li><a class="reference external" href="./unsupervised-analysis.html">Unsupervised analysis</a></li>
+<li><a class="reference external" href="./copy-correction.html">Copy correction</a></li>
 </ol>
-<div class="code python highlight-python"><div class="highlight"><pre># update the notebooks
-!rm -rf SSUsearch
-!git clone https://github.com/jiarong/SSUsearch.git
-!cp SSUsearch/notebooks/*.ipynb .
-</pre></div>
-</div>
 </div>
 
 
@@ -81,59 +85,27 @@ ssu-search-Copy4.rst are the ones to run for test data</li>
 <!-- disqus commenting disabled; set disqus_shortname -->
 
           </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../index.html">Documentation overview</a><ul>
-  <li><a href="index.html">Table of Content</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Table of Content</a></li>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/SSUsearch/overview.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
       </div>
       <div class="clearer"></div>
     </div>
-
-    <div class="footer">
-      &copy;2015, Jiarong Guo.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
-      
-      |
-      <a href="../_sources/SSUsearch/overview.txt"
-          rel="nofollow">Page source</a>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="SSUsearch"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Microbial Ecology Protocols 0.2 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >SSUsearch</a> &raquo;</li> 
+      </ul>
     </div>
 
-    
-
-    
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Jiarong Guo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
 
 
 

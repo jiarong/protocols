@@ -8,7 +8,7 @@
     
     <title>Install dependencies &mdash; Microbial Ecology Protocols 0.2 documentation</title>
     
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/labibi.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -40,11 +40,19 @@
 
 
   </head>
-  <body role="document">  
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Microbial Ecology Protocols 0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
-        <div class="bodywrapper">
           <div class="body" role="main">
             
   
@@ -63,7 +71,7 @@ the recommended AMI, you can skip this part.</strong></p>
 tutorial using Amazon EC2 instance loaded with the recommended AMI, you
 can skip this part.</p>
 <div class="section" id="setup-installation-directory">
-<h2>setup installation directory<a class="headerlink" href="#setup-installation-directory" title="Permalink to this headline">¶</a></h2>
+<h2>Setup installation directory<a class="headerlink" href="#setup-installation-directory" title="Permalink to this headline">¶</a></h2>
 <p>Go to the working directory:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">notebooks</span>
 </pre></div>
@@ -80,7 +88,7 @@ cd ./external_tools
 </div>
 <div class="section" id="install-hmmer">
 <h2>Install HMMER<a class="headerlink" href="#install-hmmer" title="Permalink to this headline">¶</a></h2>
-<div class="code highlight-python"><div class="highlight"><pre>wget -c http://selab.janelia.org/software/hmmer3/3.1b1/hmmer-3.1b1-linux-intel-x86_64.tar.gz -O hmmer-3.1b1-linux-intel-x86_64.tar.gz
+<div class="highlight-bash"><div class="highlight"><pre>wget -c http://selab.janelia.org/software/hmmer3/3.1b1/hmmer-3.1b1-linux-intel-x86_64.tar.gz -O hmmer-3.1b1-linux-intel-x86_64.tar.gz
 
 tar -xzvf hmmer-3.1b1-linux-intel-x86_64.tar.gz
 
@@ -92,7 +100,7 @@ cp hmmer-3.1b1-linux-intel-x86_64/binaries/hmmsearch ./bin
 </div>
 <div class="section" id="install-mothur">
 <h2>Install mothur<a class="headerlink" href="#install-mothur" title="Permalink to this headline">¶</a></h2>
-<div class="code highlight-python"><div class="highlight"><pre>wget http://www.mothur.org/w/images/8/88/Mothur.cen_64.zip -O mothur.zip
+<div class="code bash highlight-python"><div class="highlight"><pre>wget http://www.mothur.org/w/images/8/88/Mothur.cen_64.zip -O mothur.zip
 
 unzip mothur.zip
 
@@ -104,7 +112,7 @@ cp mothur/mothur ./bin
 </div>
 <div class="section" id="install-rdp-mcclust-tool">
 <h2>Install RDP mcclust tool<a class="headerlink" href="#install-rdp-mcclust-tool" title="Permalink to this headline">¶</a></h2>
-<div class="code highlight-python"><div class="highlight"><pre>wget http://lyorn.idyll.org/~gjr/public2/misc/Clustering.tar.gz
+<div class="code bash highlight-python"><div class="highlight"><pre>wget http://lyorn.idyll.org/~gjr/public2/misc/Clustering.tar.gz
 
 tar -xzvf Clustering.tar.gz
 </pre></div>
@@ -112,10 +120,8 @@ tar -xzvf Clustering.tar.gz
 </div>
 <div class="section" id="install-python-packages">
 <h2>Install python packages<a class="headerlink" href="#install-python-packages" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="skip-if-you-already-have-the-packages-installed">
-<h2>Skip if you already have the packages installed<a class="headerlink" href="#skip-if-you-already-have-the-packages-installed" title="Permalink to this headline">¶</a></h2>
-<div class="code highlight-python"><div class="highlight"><pre>source ~/.bashrc
+<p>Skip if you already have the packages installed</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>source ~/.bashrc
 
 pip install -U pip
 
@@ -126,10 +132,8 @@ pip install brewer2mpl
 pip install biom-format
 </pre></div>
 </div>
-</div>
-<div class="section" id="install-numpy-matplotlib-scipy-and-pandas">
-<h2>Install numpy, matplotlib, scipy, and pandas<a class="headerlink" href="#install-numpy-matplotlib-scipy-and-pandas" title="Permalink to this headline">¶</a></h2>
-<div class="code highlight-python"><div class="highlight"><pre>pip install numpy matplotlib scipy pandas
+<p>Install numpy, matplotlib, scipy, and pandas</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>pip install numpy matplotlib scipy pandas
 </pre></div>
 </div>
 <p>Alternatively, you can install <strong>anaconda</strong> that have most popular
@@ -138,7 +142,7 @@ python packages installed: <a class="reference external" href="https://store.con
 </div>
 <div class="section" id="check-dependencies-installed">
 <h2>check dependencies installed<a class="headerlink" href="#check-dependencies-installed" title="Permalink to this headline">¶</a></h2>
-<div class="code highlight-python"><div class="highlight"><pre>make -f SSUsearch/Makefile tool_check Hmmsearch=hmmsearch Mothur=mothur Flash=flash Mcclust_jar=./Clustering/dist/Clustering.jar
+<div class="code bash highlight-python"><div class="highlight"><pre>make -f SSUsearch/Makefile tool_check Hmmsearch=hmmsearch Mothur=mothur Flash=flash Mcclust_jar=./Clustering/dist/Clustering.jar
 </pre></div>
 </div>
 </div>
@@ -150,71 +154,23 @@ python packages installed: <a class="reference external" href="https://store.con
 <!-- disqus commenting disabled; set disqus_shortname -->
 
           </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Install dependencies</a><ul>
-<li><a class="reference internal" href="#setup-installation-directory">setup installation directory</a></li>
-<li><a class="reference internal" href="#install-hmmer">Install HMMER</a></li>
-<li><a class="reference internal" href="#install-mothur">Install mothur</a></li>
-<li><a class="reference internal" href="#install-rdp-mcclust-tool">Install RDP mcclust tool</a></li>
-<li><a class="reference internal" href="#install-python-packages">Install python packages</a></li>
-<li><a class="reference internal" href="#skip-if-you-already-have-the-packages-installed">Skip if you already have the packages installed</a></li>
-<li><a class="reference internal" href="#install-numpy-matplotlib-scipy-and-pandas">Install numpy, matplotlib, scipy, and pandas</a></li>
-<li><a class="reference internal" href="#check-dependencies-installed">check dependencies installed</a></li>
-</ul>
-</li>
-</ul>
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../index.html">Documentation overview</a><ul>
-  </ul></li>
-</ul>
-</div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/SSUsearch/pipeline-dependency-installation.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
       </div>
       <div class="clearer"></div>
     </div>
-
-    <div class="footer">
-      &copy;2015, Jiarong Guo.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
-      
-      |
-      <a href="../_sources/SSUsearch/pipeline-dependency-installation.txt"
-          rel="nofollow">Page source</a>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Microbial Ecology Protocols 0.2 documentation</a> &raquo;</li> 
+      </ul>
     </div>
 
-    
-
-    
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Jiarong Guo.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
 
 
 

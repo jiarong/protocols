@@ -16,7 +16,7 @@ Following steps should work for linux machines. If you are running this
 tutorial using Amazon EC2 instance loaded with the recommended AMI, you
 can skip this part.
 
-setup installation directory
+Setup installation directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Go to the working directory::
@@ -35,7 +35,7 @@ Make a directory call bin for binaries::
 Install HMMER
 ~~~~~~~~~~~~~
 
-.. code::
+.. code-block:: bash
 
     wget -c http://selab.janelia.org/software/hmmer3/3.1b1/hmmer-3.1b1-linux-intel-x86_64.tar.gz -O hmmer-3.1b1-linux-intel-x86_64.tar.gz
 
@@ -48,7 +48,7 @@ Install HMMER
 Install mothur
 ~~~~~~~~~~~~~~
 
-.. code::
+.. code:: bash
 
     wget http://www.mothur.org/w/images/8/88/Mothur.cen_64.zip -O mothur.zip
 
@@ -61,7 +61,7 @@ Install mothur
 Install RDP mcclust tool
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. code::
+.. code:: bash
 
     wget http://lyorn.idyll.org/~gjr/public2/misc/Clustering.tar.gz
 
@@ -71,9 +71,8 @@ Install python packages
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Skip if you already have the packages installed
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. code::
+.. code:: bash
 
     source ~/.bashrc
 
@@ -87,8 +86,8 @@ Skip if you already have the packages installed
 
 
 Install numpy, matplotlib, scipy, and pandas
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-.. code::
+
+.. code:: bash
 
     pip install numpy matplotlib scipy pandas
 
@@ -100,7 +99,7 @@ The anaconda installation guide is `here <http://docs.continuum.io/anaconda/inst
 check dependencies installed
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. code::
+.. code:: bash
 
     make -f SSUsearch/Makefile tool_check Hmmsearch=hmmsearch Mothur=mothur Flash=flash Mcclust_jar=./Clustering/dist/Clustering.jar
 
