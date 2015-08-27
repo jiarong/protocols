@@ -21,15 +21,14 @@ If your computer has **many processors**, there are two ways to make use of the 
 
 1. Set "Cpu" higher number.
 
-2. make more copies of this notebook (click "File" then "Make a copy" in
-   menu bar), so you can run the step on multiple files at the same
-   time.
+2. Run steps in this page on multiple terminal windows at the same time.
+   One for each sample.
 
 (Again we assume the "Seqfile" is quality trimmed.)
 
 **Again, we will process one file at a time; set the "Seqfile" variable to the seqfile name to be be processed**
 
-First part of seqfile basename (separated by ".") will be the label of this sample, so named it properly (unique).**
+**First part of seqfile basename (separated by ".") will be the label of this sample, so named it properly (unique).**
 
 e.g. for "/usr/local/notebooks/data/test/data/1c.fa", "1c" will the
 label of this sample.
