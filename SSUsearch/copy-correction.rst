@@ -1,7 +1,7 @@
 Copy corrections
 ~~~~~~~~~~~~~~~~
 
-Copy corrections is based on `copyrighter <http://www.ncbi.nlm.nih.gov/pubmed/24708850>`_. One copy database for each Greengene taxon at each level is provided by the tool. We will use that database for correcting our Greengene taxonomy abundance and OTU abundance.
+Copy corrections is based on `copyrighter <http://www.ncbi.nlm.nih.gov/pubmed/24708850>`_. One copy database for each Greengene taxon at each level is provided by the tool. We will use that database for correcting our Greengene taxonomy abundance and OTU abundance. An alternative is: `rrnDB <https://rrndb.umms.med.umich.edu/static/download/>`_. Make sure "Copy_db" and "Gene_taxa_cc" (the classification database) use the same taxon string format.
 
 Set up a directory::
 
@@ -22,7 +22,8 @@ Set up parameters::
     Wkdir=$(readlink -f $Wkdir)
     Design=$(readlink -f $Design)
     Copy_db=$(readlink -f $Copy_db)
-    
+
+
 Go to the directory::
 
     cd ./workdir/copy_correction
