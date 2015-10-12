@@ -21,7 +21,7 @@ Download database files
 
 Download the database files we need::
 
-    curl -O http://lyorn.idyll.org/~gjr/public2/misc/SSUsearch_db.tgz
+    curl -O http://athyra.oxli.org/~gjr/public2/misc/SSUsearch_db.tgz
 
 Unzip the file::
 
@@ -59,7 +59,7 @@ download a small test dataset
 
 Download a directory of files::
 
-    wget -r -np -nH --cut-dir=4 --reject="index.html*" http://lyorn.idyll.org/~gjr/public2/misc/SSUsearch/test/
+    wget -r -np -nH --cut-dir=4 --reject="index.html*" http://athyra.oxli.org/~gjr/public2/misc/SSUsearch/test/
 
     ls test/data/
 
