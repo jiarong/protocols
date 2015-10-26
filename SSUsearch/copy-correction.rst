@@ -5,7 +5,7 @@ Copy corrections is based on `copyrighter <http://www.ncbi.nlm.nih.gov/pubmed/24
 
 Set up a directory::
 
-    cd /usr/local/notebooks
+    cd ~/Desktop/SSUsearch
     ### set up directory
     mkdir -p ./workdir/copy_correction
 
@@ -46,14 +46,18 @@ Get original OTU table::
     
 Do copy correction and even sampling::
 
+    Label=userLabel
+    #Label=dummy
     python $Script_dir/copyrighter-otutable.py $Copy_db $Prefix.cons.taxonomy $Prefix.shared $Prefix.cc.shared
     mv $Prefix.cc.shared $Prefix.shared
     mothur "#make.biom(shared=$Prefix.shared, constaxonomy=$Prefix.cons.taxonomy);"
-    mv $Prefix.userLabel.biom $Prefix.biom
+    mv $Prefix.$Label.biom $Prefix.biom
     rm -f mothur.*.logfile
 
 **SS.biom** can be further used for diversity analysis, important but not focus of this tutorial (details see `mothur wiki <http://www.mothur.org/wiki/454_SOP>`_)::
 
-    mothur "#make.shared(biom=$Prefix.biom); sub.sample(shared=$Prefix.shared); summary.single(calc=nseqs-coverage-sobs-chao-shannon-invsimpson); dist.shared(calc=braycurtis); pcoa(phylip=$Prefix.userLabel.subsample.braycurtis.userLabel.lt.dist); nmds(phylip=$Prefix.userLabel.subsample.braycurtis.userLabel.lt.dist); amova(phylip=$Prefix.userLabel.subsample.braycurtis.userLabel.lt.dist, design=$Design); tree.shared(calc=braycurtis); unifrac.weighted(tree=$Prefix.userLabel.subsample.braycurtis.userLabel.tre, group=$Design, random=T)"
+    Label=userLabel
+    #Label=dummy
+    mothur "#make.shared(biom=$Prefix.biom); sub.sample(shared=$Prefix.shared); summary.single(calc=nseqs-coverage-sobs-chao-shannon-invsimpson); dist.shared(calc=braycurtis); pcoa(phylip=$Prefix.$Label.subsample.braycurtis.$Label.lt.dist); nmds(phylip=$Prefix.$Label.subsample.braycurtis.$Label.lt.dist); amova(phylip=$Prefix.$Label.subsample.braycurtis.$Label.lt.dist, design=$Design); tree.shared(calc=braycurtis); unifrac.weighted(tree=$Prefix.$Label.subsample.braycurtis.$Label.tre, group=$Design, random=T)"
     rm -f mothur.*.logfile; 
     rm -f *.rabund

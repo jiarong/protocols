@@ -1,15 +1,14 @@
 Unsupervised analysis
 ~~~~~~~~~~~~~~~~~~~~~
+After you have apply `search step <./ssu-search.rst>`_ to all four sequence files (1c.fa, 1d.fa, 2c.fa, and 2d.fa in ~/Desktop/SSUsearch/data/test/data), set another directory for unsupervised analysis::
 
-Set another directory for unsupervised analysis::
-
-    cd /usr/local/notebooks
+    cd ~/Desktop/SSUsearch
     mkdir -p ./workdir/clust
 
 Set parameters::
 
     Prefix='SS'    # name for the analysis run
-    Script_dir='./SSUsearch/scripts'
+    Script_dir='./scripts'
     Wkdir='./workdir'
     Mcclust_jar='./external_tools/Clustering/dist/Clustering.jar'
     Java_xmx='10g'
@@ -26,6 +25,11 @@ Set parameters::
 Go the clust direcory::
 
     cd ./workdir/clust
+
+Replace ':' with '_' in sequence names (original illumina name has ':' in them, mothur do this automatically)::
+
+    sed -i 's/:/_/g' $Wkdir/*.ssu.out/*.forclust
+    echo "*** Replace ':' with '_' in seq names (original illumina name has ':' in them)"
 
 Combine all the aligned sequences from each sample::
 
@@ -65,11 +69,6 @@ Convert clust results to mothur list::
 
     python $Script_dir/mcclust2mothur-list-cutoff.py complete.clust $Prefix.list $Otu_dist_cutoff
 
-Remove ":" in sequence names (mothur automatically converts ":" to "_")::
-
-    sed -i 's/:/_/g' $Prefix.names $Prefix.groups $Prefix.list
-    echo "*** Replace ':' with '_' in seq names (original illumina name has ':' in them)"
-
 Get representitives of each OTU at OTU distance cutoff defined at top of this page::
 
     java -jar $Mcclust_jar rep-seqs -c -l -s complete.clust $Otu_dist_cutoff combined_seqs.afa
@@ -97,17 +96,24 @@ Make biom file::
 
 Since the purpose of this tutorial is to show our new pipeline, we will skip details of community analysis with mothur. Following are some common commands in mothur::
     
-    mothur "#make.shared(biom=$Prefix.biom); sub.sample(shared=$Prefix.shared); summary.single(calc=nseqs-coverage-sobs-chao-shannon-invsimpson); dist.shared(calc=braycurtis); pcoa(phylip=$Prefix.userLabel.subsample.braycurtis.userLabel.lt.dist); nmds(phylip=$Prefix.userLabel.subsample.braycurtis.userLabel.lt.dist); amova(phylip=$Prefix.userLabel.subsample.braycurtis.userLabel.lt.dist, design=$Design); tree.shared(calc=braycurtis); unifrac.weighted(tree=$Prefix.userLabel.subsample.braycurtis.userLabel.tre, group=$Design, random=T)"
+    # mothur is inconsistent with the "Label" in files names. I have seens either "dummy" or "useLabel“
+    # "dummy" for 1.33.3; "userLabel" for 1.34.4
+    Label=userLabel
+    #Label=dummy
+    mothur "#make.shared(biom=$Prefix.biom); sub.sample(shared=$Prefix.shared); summary.single(calc=nseqs-coverage-sobs-chao-shannon-invsimpson); dist.shared(calc=braycurtis); pcoa(phylip=$Prefix.$Label.subsample.braycurtis.$Label.lt.dist); nmds(phylip=$Prefix.$Label.subsample.braycurtis.$Label.lt.dist); amova(phylip=$Prefix.$Label.subsample.braycurtis.$Label.lt.dist, design=$Design); tree.shared(calc=braycurtis); unifrac.weighted(tree=$Prefix.$Label.subsample.braycurtis.$Label.tre, group=$Design, random=T)"
     rm -f mothur.*.logfile; 
     rm -f *.rabund
 
 Some simple visualization::
 
+    Label=userLabel
+    #Label=dummy
+
     # alpha diveristy index
-    python $Script_dir/plot-diversity-index.py "userLabel" "chao,shannon,invsimpson" "c,d" "SS.userLabel.subsample.groups.summary" "test" "test.alpha" 
+    python $Script_dir/plot-diversity-index.py $Label "chao,shannon,invsimpson" "c,d" "SS.$Label.subsample.groups.summary" "test" "test.alpha"
 
     # taxon distribution
     python $Script_dir/plot-taxa-count.py 2 test.taxa.dist ../*.ssu.out/*.silva.taxonomy.count
 
     # ordination
-    python $Script_dir/plot-pcoa.py  SS.userLabel.subsample.braycurtis.userLabel.lt.pcoa.axes  SS.userLabel.subsample.braycurtis.userLabel.lt.pcoa.loadings  test.beta.pcoa
+    python $Script_dir/plot-pcoa.py  SS.$Label.subsample.braycurtis.$Label.lt.pcoa.axes  SS.$Label.subsample.braycurtis.$Label.lt.pcoa.loadings  test.beta.pcoa

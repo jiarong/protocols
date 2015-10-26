@@ -16,21 +16,28 @@ Following steps should work for linux machines. If you are running this
 tutorial using Amazon EC2 instance loaded with the recommended AMI, you
 can skip this part.
 
+This tutorial is made on a **64 bit** linux (ubuntu) machine. If you have 32 bit machine, the installer file links needs to be changed for HMMER3.1 and mothur.
+
+**HMMER3.0 or lower does not work due to change in HMM format (.hmm).**
+
+**Mothur 1.34.2 is used here**
+
 Setup installation directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Clone the SSUsearch repository (**Skip if you have already done so**)::
+
+    cd ~/Desktop
+    git clone https://github.com/jiarong/SSUsearch
+
 Go to the working directory::
 
-    cd /usr/local/notebooks
+    cd ~/Desktop/SSUsearch/
 
 Make a directory called external_tools and go into it::
 
     mkdir -p ./external_tools
     cd ./external_tools
-
-Make a directory call bin for binaries::
-
-    mkdir -p ./bin
 
 Install HMMER
 ~~~~~~~~~~~~~
@@ -41,9 +48,12 @@ Install HMMER
 
     tar -xzvf hmmer-3.1b1-linux-intel-x86_64.tar.gz
 
-    cp hmmer-3.1b1-linux-intel-x86_64/binaries/hmmsearch /usr/local/bin
+Copy the binary to a global PATH, you will need administrater privilege and password::
 
-    cp hmmer-3.1b1-linux-intel-x86_64/binaries/hmmsearch ./bin
+.. code:: bash
+
+    sudo cp hmmer-3.1b1-linux-intel-x86_64/binaries/hmmsearch /usr/local/bin
+
 
 Install mothur
 ~~~~~~~~~~~~~~
@@ -54,9 +64,11 @@ Install mothur
 
     unzip mothur.zip
 
-    cp mothur/mothur /usr/local/bin
+Copy the binary to a global PATH, you will need administrater privilege and password::
 
-    cp mothur/mothur ./bin
+.. code:: bash
+
+    sudo cp mothur/mothur /usr/local/bin
 
 Install RDP mcclust tool
 ~~~~~~~~~~~~~~~~~~~~~~~~

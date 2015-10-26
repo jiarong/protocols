@@ -3,7 +3,7 @@ Search SSU rRNA gene
 
 Set up working directory::
 
-    cd /usr/local/notebooks
+    cd ~/Desktop/SSUsearch
     mkdir -p ./workdir
 
 Check seqfile files to process in data directory (make sure you still remember the data directory)::
@@ -26,11 +26,11 @@ If your computer has **many processors**, there are two ways to make use of the 
 
 (Again we assume the "Seqfile" is quality trimmed.)
 
-**Again, we will process one file at a time; set the "Seqfile" variable to the seqfile name to be be processed**
+**Again, we will process one file at a time; set the "Seqfile" variable to the seqfile name to be be processed.**
 
 **First part of seqfile basename (separated by ".") will be the label of this sample, so named it properly (unique).**
 
-e.g. for "/usr/local/notebooks/data/test/data/1c.fa", "1c" will the
+e.g. for "~/Desktop/SSUsearch/data/test/data/1c.fa", "1c" will the
 label of this sample.
 
 **Set the Seqfile variable to the sequence file to process**::
@@ -45,7 +45,7 @@ Other parameters to set::
     Cpu='2'   # number of maxixum threads for search and alignment
     Hmm='./data/SSUsearch_db/Hmm.ssu.hmm'   # hmm model for ssu
     Gene='ssu'
-    Script_dir='./SSUsearch/scripts'
+    Script_dir='./scripts'
     Gene_model_org='./data/SSUsearch_db/Gene_model_org.16s_ecoli_J01695.fasta'
     Ali_template='./data/SSUsearch_db/Ali_template.silva_ssu.fasta'
     

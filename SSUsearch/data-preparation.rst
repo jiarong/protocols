@@ -5,7 +5,7 @@ Data preparation
 
 First go to a working dirtory::
 
-    cd /usr/local/notebooks
+    cd ~/Desktop/SSUsearch
 
 Make a directory for data::
 
@@ -59,8 +59,8 @@ download a small test dataset
 
 Download a directory of files::
 
-    wget -r -np -nH --cut-dir=4 --reject="index.html*" http://athyra.oxli.org/~gjr/public2/misc/SSUsearch/test/
-
+    wget http://athyra.oxli.org/~gjr/public2/misc/SSUsearch/test.tgz
+    tar -xzvf test.tgz
     ls test/data/
 
 
