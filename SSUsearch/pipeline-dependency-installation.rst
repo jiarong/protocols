@@ -48,10 +48,9 @@ Install HMMER
 
     tar -xzvf hmmer-3.1b1-linux-intel-x86_64.tar.gz
 
-Copy the binary to a global PATH, you will need administrater privilege and password::
+Copy the binary to a global PATH, you will need administrater privilege and password:
 
 .. code:: bash
-
     sudo cp hmmer-3.1b1-linux-intel-x86_64/binaries/hmmsearch /usr/local/bin
 
 
@@ -59,15 +58,13 @@ Install mothur
 ~~~~~~~~~~~~~~
 
 .. code:: bash
-
     wget http://www.mothur.org/w/images/8/88/Mothur.cen_64.zip -O mothur.zip
 
     unzip mothur.zip
 
-Copy the binary to a global PATH, you will need administrater privilege and password::
+Copy the binary to a global PATH, you will need administrater privilege and password:
 
 .. code:: bash
-
     sudo cp mothur/mothur /usr/local/bin
 
 Install RDP mcclust tool
