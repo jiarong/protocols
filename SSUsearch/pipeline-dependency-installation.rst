@@ -67,6 +67,7 @@ Install mothur
 Copy the binary to a global PATH, you will need administrater privilege and password:
 
 .. code:: bash
+
     sudo cp mothur/mothur /usr/local/bin
 
 Install RDP mcclust tool
@@ -74,7 +75,7 @@ Install RDP mcclust tool
 
 .. code:: bash
 
-    wget http://lyorn.idyll.org/~gjr/public2/misc/Clustering.tar.gz
+    wget http://athyra.oxli.org/~gjr/public2/misc/Clustering.tar.gz
 
     tar -xzvf Clustering.tar.gz
 
