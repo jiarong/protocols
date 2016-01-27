@@ -75,6 +75,7 @@ Get representitives of each OTU at OTU distance cutoff defined at top of this pa
     mv complete.clust_rep_seqs.fasta otu_rep_align.fa
 
 Get OTU table::
+
     mothur "#make.shared(list=$Prefix.list, group=$Prefix.groups, label=$Otu_dist_cutoff);"
 
 Get consensus taxonomy for each OTU::
