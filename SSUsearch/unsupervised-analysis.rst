@@ -1,6 +1,6 @@
 Unsupervised analysis
 ~~~~~~~~~~~~~~~~~~~~~
-After you have apply `search step <./ssu-search.rst>`_ to all four sequence files (1c.fa, 1d.fa, 2c.fa, and 2d.fa in ~/Desktop/SSUsearch/data/test/data), set another directory for unsupervised analysis::
+After you have apply `search step <./ssu-search.html>`_ to all four sequence files (1c.fa, 1d.fa, 2c.fa, and 2d.fa in ~/Desktop/SSUsearch/data/test/data), set another directory for unsupervised analysis::
 
     cd ~/Desktop/SSUsearch
     mkdir -p ./workdir/clust
