@@ -19,7 +19,7 @@ README
 
 If your computer has **many processors**, there are two ways to make use of the resource:
 
-1. Set "Cpu" higher number.
+1. Set "Cpu" to a higher number.
 
 2. Run steps in this page on multiple terminal windows at the same time.
    One for each sample.
@@ -49,7 +49,11 @@ Other parameters to set::
     Gene_model_org='./data/SSUsearch_db/Gene_model_org.16s_ecoli_J01695.fasta'
     Ali_template='./data/SSUsearch_db/Ali_template.silva_ssu.fasta'
     
-    Start='577'  #pick regions for de novo clustering
+    # pick start and end of a region in V4 for de novo clustering
+    # the default numbers are for 150bp reads
+    # rule of thumb is pick a region with more reads with larger overlap
+    # change to Start=577, End=657, Len_cutoff=75 for 100bp reads
+    Start='577'
     End='727'
     Len_cutoff='100' # min length for reads picked for the region
     
