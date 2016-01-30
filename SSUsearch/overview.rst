@@ -8,7 +8,7 @@ and python numpy, pandas, scipy, matplotlib, and screed package.
 Following are step by step tutorial for this pipeline:
 
 1. `Install dependencies <./pipeline-dependency-installation.html>`_.
-   If running amazon EC2 with ami "**ami-d87571b0**", skip this step.
+   If running amazon EC2 with ami "**ami-7c82af16**", skip this step.
 
 2. `Database and dataset preparation <./data-preparation.html>`_
 
