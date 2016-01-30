@@ -75,9 +75,9 @@ Install RDP mcclust tool
 
 .. code:: bash
 
-    wget http://athyra.oxli.org/~gjr/public2/misc/Clustering.tar.gz
+    wget https://s3.amazonaws.com/ssusearchdb/Clustering.tgz
 
-    tar -xzvf Clustering.tar.gz
+    tar -xzvf Clustering.tgz
 
 Install python packages
 ~~~~~~~~~~~~~~~~~~~~~~~
