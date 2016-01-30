@@ -11,7 +11,7 @@ Set parameters::
     Script_dir='./scripts'
     Wkdir='./workdir'
     Mcclust_jar='./external_tools/Clustering/dist/Clustering.jar'
-    Java_xmx='10g'
+    Java_xmx='4g'  # increase this if your machine has more memory
     Java_gc_threads='2'
     Otu_dist_cutoff='0.05'
     Design='./data/test/SS.design'

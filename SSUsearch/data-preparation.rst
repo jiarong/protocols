@@ -21,7 +21,7 @@ Download database files
 
 Download the database files we need::
 
-    curl -O http://athyra.oxli.org/~gjr/public2/misc/SSUsearch_db.tgz
+    curl -O https://s3.amazonaws.com/ssusearchdb/SSUsearch_db.tgz
 
 Unzip the file::
 
@@ -59,7 +59,7 @@ download a small test dataset
 
 Download a directory of files::
 
-    wget http://athyra.oxli.org/~gjr/public2/misc/SSUsearch/test.tgz
+    wget https://s3.amazonaws.com/ssusearchdb/test.tgz
     tar -xzvf test.tgz
     ls test/data/
 
