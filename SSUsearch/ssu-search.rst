@@ -68,7 +68,7 @@ Other parameters to set::
     ###
 
     ### first part of file basename will the label of this sample
-    Filename=$(basename(${Seqfile}))
+    Filename=$(basename ${Seqfile})
     Tag=${Filename%%.*}
 
     ### make absolute path

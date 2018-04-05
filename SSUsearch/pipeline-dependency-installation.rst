@@ -113,5 +113,5 @@ check dependencies installed
 
 .. code:: bash
 
-    make -f SSUsearch/Makefile tool_check Hmmsearch=hmmsearch Mothur=mothur Flash=flash Mcclust_jar=./Clustering/dist/Clustering.jar
+    make -f SSUsearch/Makefile tool_check Hmmsearch=hmmsearch Mothur=mothur Mcclust_jar=./Clustering/dist/Clustering.jar
 
